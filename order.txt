@@ -1,0 +1,63 @@
+Hardcoded Agents:  (has a set strategy it follows which is not learned or learning with not many modifications from sampleAIs)
+    Alan Brooks
+        brill : "High cash reserve, overpays for property's in trades" : docs joke it is dadbot
+    Brett Hutley
+        bretai:
+        buffy:
+        Cordie:
+        Willow:
+        Xander:
+
+    DekunYoung:
+        SimpleMind:
+
+
+    Huw Roberts: interestingly all of these utilize a "boring" metric which is accounted in measuring a modified utility of the property
+        catbert:
+        huw...:
+
+    Ling Li:
+        ling1...:
+        ling_cripling:
+
+    Manoj Bisht:
+        rimpo_ai: biased towards purchasing stations+ the two expensive properties
+
+
+    Rafael Verde:
+        Green Devil: It Does NOTHING....
+
+
+    Simon Bell:
+        snowboarderAI: uses a sqlite db to store expected values of properties and acts on them.
+
+
+    Simon Cornell:
+        baldrick: establishes multiple strategies for auctions and proposals.
+
+    Stephen Chan:
+        big_brick: unclear
+
+
+Utilizing CashFlow econ princ:
+    DekunYoung:
+        strategy:
+
+    Mehul Jain:
+        mumbaikar: uses different measure of ROI for properties and "keeping and building assets wisely"
+
+    Sumesh Lund:
+        generous_sindhi: "An AI that concentrates on keeping assets and building houses wisely" it is also using a different ROI measure
+
+
+
+Policy Based:
+    Cedric Daligny:
+        ...BlueFocus:
+        ...GaussFocusAI:
+        ...HighCostFocus:
+        ...InvertGaussFocus:
+        ...BuyerNeutral:
+
+    Simon Cornell:
+        Edmund, LordMelchiit,Percy,Queenie: appears to be trained and copied in parameters (no dynamic learning)
