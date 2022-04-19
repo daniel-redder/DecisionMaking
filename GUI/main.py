@@ -21,17 +21,18 @@ class player:
         self.destination = None
         self.vx = 0.0
         self.vy = 0.0
+        self.inTrade = False
         self.x, self.y = self.teleport(0)
 
     #updates the players position by its velocity per frame
     def update(self):
         self.x += self.vx
         self.y += self.vy
-        self.checkWalk()
+        self.check_walk()
 
 
     #draws the player on the board
-    def draw(self,other_player,):
+    def draw(self,other_player,screen):
         self.update()
         oth_pos = other_player.get_posit()
 
@@ -43,6 +44,33 @@ class player:
         else:
            pass
 
+        if self.inTrade:
+            self.drawTrade()
+
+
+    #Trade Code
+    #-------------------------------------------------------------------
+    #internal function to draw a trade
+    def drawTrade(self,screen):
+        pass
+
+    #function called in code to initiate a trade
+    def trade(self,properties=["",""],money=100,accept_deny=False):
+        pass
+    #--------------------------------------------------------------------
+
+    #display utilities
+    #--------------------------------------------------------------------
+
+
+    #generic function to display a message
+    def display(self,screen,message=""):
+        pass
+
+    #---------------------------------------------------------------------
+
+    #walking code
+    #--------------------------------------------------------------------
 
     def get_posit(self):
         return self.position
@@ -56,11 +84,16 @@ class player:
         pass
 
     # returns the x,y float position of the given monopoly tile
-    def teleport(self):
+    def teleport(self,position):
 
         return 0.0, 0.0
 
+    #----------------------------------------------------------------------
 
+
+#Draws all buttons and display tools
+def drawControls(screen):
+    pass
 
 
 def main():
@@ -69,13 +102,29 @@ def main():
     clock = pygame.time.Clock()
     board = pygame.image.load("monopoly.jpg")
 
+    player_one = player("red","testAIOne")
+    player_two = player("blue","testAITwo")
+
     while True:
         events = pygame.event.get()
         screen.fill(BACKGROUND)
         screen.blit(board, (0, 0))
 
+        #player drawing
+        player_one.draw(player_two,screen)
+        player_two.draw(player_one,screen)
+
+        #button and control drawing
+        drawControls(screen)
+
         pygame.display.flip()
         clock.tick(60)
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
