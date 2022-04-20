@@ -91,22 +91,57 @@ class player:
     #----------------------------------------------------------------------
 
 
-#Draws all buttons and display tools
-def drawControls(screen):
-    pass
+#all neccesary tools across functions
+#-----------------------------------------------
+pygame.init()
+smallfont = pygame.font.SysFont('Corbel', 35)
 
+#-----------------------------------------------
+
+#Draws all buttons and display tools
+def drawControls(screen,mouse):
+    mouse_posit = smallfont.render(f"{mouse[0]},{mouse[1]}",True,(255,255,255))
+    screen.blit(mouse_posit, (1039,37))
+
+import json
+
+def handle_events(events,mouse,screen,infinitelist):
+
+    for event in events:
+        #currently used for selecting positions of players on field
+        if event.type == pygame.MOUSEBUTTONUP:
+            out_dict = {"pos":mouse}
+            if event.button == 1: out_dict["col"] = (255,0,0)
+            if event.button == 3: out_dict["col"] = (0,255,0)
+            if event.button == 2:
+                print(infinitelist)
+                with open("out.json","w+") as wp:
+                    li = [{"pos":pl["pos"],"col":pl["col"]} for pl in infinitelist]
+                    json.dump(li,wp)
+                return infinitelist
+
+            out_dict["rec"] = pygame.Rect(mouse[0],mouse[1],15,15)
+
+            print("test")
+
+            infinitelist.append(out_dict)
+
+    return infinitelist
 
 def main():
-    pygame.init()
+
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     clock = pygame.time.Clock()
     board = pygame.image.load("monopoly.jpg")
 
     player_one = player("red","testAIOne")
     player_two = player("blue","testAITwo")
+    infini_draw_list = []
+
 
     while True:
         events = pygame.event.get()
+        mouse = pygame.mouse.get_pos()
         screen.fill(BACKGROUND)
         screen.blit(board, (0, 0))
 
@@ -115,7 +150,15 @@ def main():
         player_two.draw(player_one,screen)
 
         #button and control drawing
-        drawControls(screen)
+        drawControls(screen,mouse)
+
+
+        #TODO remove only temporary for location drawing
+        for x in infini_draw_list: pygame.draw.rect(screen,x["col"],x["rec"])
+
+        #capture events
+        infini_draw_list = handle_events(events,mouse,screen,infini_draw_list)
+
 
         pygame.display.flip()
         clock.tick(60)
