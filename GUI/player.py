@@ -21,6 +21,8 @@ class player:
         self.position = 0
         self.name = name
 
+        self.turn = False
+
         #current trip destination
         self.midDestination = None
 
@@ -210,3 +212,12 @@ class player:
 
     def addOther(self,other): self.otherPlayer = other
     #----------------------------------------------------------------------
+    #used in logger parsing and turn setting
+
+    def isTurn(self):
+        return self.turn
+
+
+    #TODO needs to check if the current process is finished... (general variable for process holding perhaps)
+    def check_concluded(self):
+        pass

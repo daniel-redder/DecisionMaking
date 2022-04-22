@@ -19,6 +19,33 @@ smallfont = pygame.font.SysFont('Corbel', 35)
 
 #-----------------------------------------------
 
+#turn parsing function for logs
+def parse(turn):
+    #Gameover code
+    if "Game over." in turn[-1]:
+        pass
+
+    parsed_turn = {}
+
+    parsed_turn["turn_player"] = turn[0].split("turn for ")[1]
+
+    inter = turn[1].split("Cash=")[1].split(", Net Worth=")
+    parsed_turn["cash"] = inter[0]
+    parsed_turn["networth"] = inter[1]
+
+
+
+    #TODO temporary return values
+    return parsed_turn, False
+
+
+
+
+
+
+
+
+
 #Draws all buttons and display tools
 def drawControls(screen,mouse):
     mouse_posit = smallfont.render(f"{mouse[0]},{mouse[1]}",True,(255,255,255))
@@ -82,6 +109,9 @@ def main(logName="game.log"):
     player_two = player((0,0,255),player_two_name,"thimble.png",otherPlayer=player_one,isOne=False)
     player_one.addOther(player_two)
 
+    #parsing indicator
+    turn_concluded = True
+
     #TODO deprecated?
     infini_draw_list = []
 
@@ -93,10 +123,31 @@ def main(logName="game.log"):
 
 
     while True:
+
+        #turn begin data collection
         events = pygame.event.get()
         mouse = pygame.mouse.get_pos()
+
+        if player_one.isTurn():
+            #TODO implement .isTurn and .check_concluded
+            #.isturn returns a boolean indicating whether it is their turn
+            #check_concluded indicates whether their turn has finished
+            turn_concluded = player_one.check_concluded()
+        elif player_two.isTurn():
+            turn_concluded = player_two.check_concluded()
+
+        if turn_concluded:
+            turn = log.nextTurn()
+            parsed_turn,next_op = parse(turn)
+
+
+
+
+        #background fill
         screen.fill(BACKGROUND)
         screen.blit(board, (0, 0))
+
+
 
         #player drawing
         player_one.draw(screen)
