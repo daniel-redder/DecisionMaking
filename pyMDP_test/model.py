@@ -1,6 +1,7 @@
 
 import random
 from monopyly import *
+from monopyly.monopyly import PlayerAIBase
 
 """
 We move (we roll out dice)
@@ -93,6 +94,30 @@ class mdpAristocrat(PlayerAIBase):
 
         If 3 deals are not accepted it will pass as many that are as possible otherwise no deal.
 
+
+        deal_proposal = DealProposal()
+
+        random.shuffle(self.properties_we_like)
+
+        # We check to see if any of the properties we like is owned
+        # by another player...
+        for property_name in self.properties_we_like:
+            property = game_state.board.get_square_by_name(property_name)
+            if(property.owner is player or property.owner is None):
+                # The property is either not owned, or owned by us...
+                continue
+
+            # The property is owned by another player, so we make them an
+            # offer for it...
+            price_offered = property.price * 2
+            if player.state.cash > price_offered:
+                return DealProposal(
+                    properties_wanted=[property],
+                    maximum_cash_offered=price_offered,
+                    propose_to_player=property.owner)
+
+
+
         """
         pass
 
@@ -110,3 +135,42 @@ class mdpAristocrat(PlayerAIBase):
 
 
 
+    def build_houses(self, game_state, player):
+
+        """
+        usefull attributes
+        player.state.owned_unmortgaged_sets (owned_set)
+        owned_set.can_build_houses (True if can build houses in set)
+        owned_set.properties  (returns property objects)
+
+        example code:
+                if player.state.cash < 1000:
+            return []
+
+        for owned_set in player.state.owned_unmortgaged_sets:
+            if not owned_set.can_build_houses:
+                continue
+            return [(p, 1) for p in owned_set.properties]
+
+        return []
+        """
+
+
+    def mortgage_properties(self,game_state, player):
+        """
+        player.state.cash
+        attribute of properties.is_mortgaged
+
+        example code:
+                if player.state.cash < 500:
+            return [p for p in player.state.properties if p.is_mortgaged is False]
+        """
+
+
+
+
+
+    def unmortgage_properties(self, game_state, player):
+        """
+        return list of mortgaged properties to unmortgage
+        """

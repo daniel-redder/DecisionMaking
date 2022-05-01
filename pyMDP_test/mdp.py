@@ -1,31 +1,43 @@
 import pymdp
 from pymdp import utils
 from pymdp.agent import Agent
+from monopyly.monopyly.squares import *
 
-num_obs = [3, 5] # observation modality dimensions
-num_states = [3, 2, 2] # hidden state factor dimensions
-num_controls = [3, 1, 1] # control state factor dimensions
-A_matrix = utils.random_A_matrix(num_obs, num_states) # create sensory likelihood (A matrix)
-B_matrix = utils.random_B_matrix(num_states, num_controls) # create transition likelihood (B matrix)
+def getProbability(check_property):
+    pass
 
 
-print(A_matrix,B_matrix)
 
-C_vector = utils.obj_array_uniform(num_obs) # uniform preferences
+def expected_value(player,check_property: []):
 
-# instantiate a quick agent using your A, B and C arrays
-my_agent = Agent( A = A_matrix, B = B_matrix, C = C_vector)
+    #syntax check #TODO
+    color_set_list = [x.property_set for x in check_property]
 
-# give the agent a random observation and get the optimized posterior beliefs
+    parsed_colors = []
 
-observation = [1, 4] # a list specifying the indices of the observation, for each observation modality
+    ev = []
 
-qs = my_agent.infer_states(observation) # get posterior over hidden states (a multi-factor belief)
+    for i in color_set_list:
 
-# Do active inference
+        x = color_set_list[i]
 
-q_pi, neg_efe = my_agent.infer_policies() # return the policy posterior and return (negative) expected free energies of each policy as well
+        if x in parsed_colors: pass
 
-action = my_agent.sample_action() # sample an action
+        #calculate value considering all properties
+        elif color_set_list.count(x) > 1:
+            num_prop_in_set=x.number_of_properties()
+            #TODO get number of properties in set owned by player
+            num_prop_owned = 1
+            if num_prop_owned + color_set_list.count(x) == num_prop_in_set:
+                #TODO potentially add the property to the player then use calculate_rent, need to find out what calculate rent is doing first
+                #replace this with calculation of property value across all properties owned and listed here then apply diff for ev
+                pass
 
-print(action)
+        #direct value calculation
+        else:
+            #TODO calculate rent may not be implemented
+            #takes parameters "game", "player" look at other ai code
+            ev.append( check_property[i].calculate_rent( ) * getProbability(check_property[i]) )
+
+    return ev
+
