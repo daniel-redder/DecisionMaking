@@ -3,41 +3,53 @@ from pymdp import utils
 from pymdp.agent import Agent
 from monopyly.monopyly.squares import *
 
-def getProbability(check_property):
+def getProbability(property:Property):
     pass
 
 
 
-def expected_value(player,check_property: []):
+def expected_value(player,game_state,check_property: []):
 
     #syntax check #TODO
     color_set_list = [x.property_set for x in check_property]
 
-    parsed_colors = []
-
     ev = []
 
-    for i in color_set_list:
+    #for each unique color set in check_property
+    for color in set(color_set_list):
 
-        x = color_set_list[i]
+        #each property in that colorset
+        color_props = [prop for prop in check_property if prop.property_set is color]
 
-        if x in parsed_colors: pass
+        #total number of properties in the set
+        total_props = color.number_of_properties()
 
-        #calculate value considering all properties
-        elif color_set_list.count(x) > 1:
-            num_prop_in_set=x.number_of_properties()
-            #TODO get number of properties in set owned by player
-            num_prop_owned = 1
-            if num_prop_owned + color_set_list.count(x) == num_prop_in_set:
-                #TODO potentially add the property to the player then use calculate_rent, need to find out what calculate rent is doing first
-                #replace this with calculation of property value across all properties owned and listed here then apply diff for ev
-                pass
+        #all properties owned by the player now
+        owned_properties = color.owned_properties(player)
 
-        #direct value calculation
-        else:
-            #TODO calculate rent may not be implemented
-            #takes parameters "game", "player" look at other ai code
-            ev.append( check_property[i].calculate_rent( ) * getProbability(check_property[i]) )
+        #temporary property val sum
+        if len(owned_properties) > 0: owned_color_value = sum([prop.calculate_rent(game_state, player) * getProbability(prop) for prop in owned_properties])
+        else: owned_color_value = 0
 
-    return ev
+        #temporary owner list
+        old_owner = []
+
+        #temporary owner setting
+        for prop in color_props:
+            old_owner.append(prop.owner)
+            prop.owner = player
+
+        #temporary property owned #TODO ensure this updates with null sett
+        temp_owned_property = color.owned_properties(player)
+
+        #temporary property value
+        temp_color_value = sum([prop.calculate_rent(game_state,player) * getProbability(prop) for prop in temp_owned_property])
+
+        #calculate difference in cost
+        ev.append( temp_color_value - owned_color_value )
+
+        #reset owner to what it was before
+        for prop in range(len(color_props)): color_props[prop].owner = old_owner[prop]
+
+    return sum(ev)
 
