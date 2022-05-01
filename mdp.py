@@ -1,10 +1,17 @@
 import pymdp
 from pymdp import utils
 from pymdp.agent import Agent
-from monopyly.monopyly.squares import *
+import pandas as pd
 
+import monopyly
+import monopyly.monopyly.squares
+from monopyly.monopyly import *
+
+#probabilities from https://faculty.math.illinois.edu/~bishop/monopoly.pdf
+# n column
 def getProbability(property:Property):
-    pass
+    df = pd.read_csv("prob.csv")
+    print(df)
 
 
 
@@ -53,3 +60,11 @@ def expected_value(player,game_state,check_property: []):
 
     return sum(ev)
 
+
+dfo = pd.read_csv("hol.csv")
+df = pd.read_csv("prob.csv")
+print(df)
+df['prob'] = dfo['prob']
+df['prob'] = df['prob'] / df['prob'].sum()
+print(df.sum())
+df.to_csv("normalized_prob_n.csv")
