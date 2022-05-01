@@ -7,32 +7,49 @@ import monopyly
 import monopyly.monopyly.squares
 from monopyly.monopyly import *
 
+
+
 #probabilities from https://faculty.math.illinois.edu/~bishop/monopoly.pdf
 # n column
 def getProbability(property:Property):
-    df = pd.read_csv("prob.csv")
-    print(df)
 
+    #potential issue with calculation in tiles with duplicate names
+    #only effects community chest and chance, however could be a problem in functions other than this
 
+    df = pd.read_csv("normalized_prob_n.csv")
+    print(property.name)
+    output_prob = df[df["prop"]==property.name]
+
+    try:
+        return output_prob['prob'][0]
+
+    except:
+        print(f"Exception in getting probabilities {property.name}")
 
 def expected_value(player,game_state,check_property: []):
+
+    maximum_turns = 500
+    discount_factor = .9
+
 
     #syntax check #TODO
     color_set_list = [x.property_set for x in check_property]
 
     ev = []
 
+    if len(color_set_list) > 1: color_set_list = set(color_set_list)
+
     #for each unique color set in check_property
-    for color in set(color_set_list):
+    for color in color_set_list:
 
         #each property in that colorset
         color_props = [prop for prop in check_property if prop.property_set is color]
 
         #total number of properties in the set
-        total_props = color.number_of_properties()
+        total_props = color.number_of_properties
 
         #all properties owned by the player now
-        owned_properties = color.owned_properties(player)
+        owned_properties = color.owned_properties(player=player)
 
         #temporary property val sum
         if len(owned_properties) > 0: owned_color_value = sum([prop.calculate_rent(game_state, player) * getProbability(prop) for prop in owned_properties])
@@ -58,13 +75,20 @@ def expected_value(player,game_state,check_property: []):
         #reset owner to what it was before
         for prop in range(len(color_props)): color_props[prop].owner = old_owner[prop]
 
-    return sum(ev)
+    one_round_ev = sum(ev)
+
+    #discount factor determined here
+    return sum([one_round_ev*pow(discount_factor, x) for x in range(maximum_turns-player.state.turns_played)])
 
 
-dfo = pd.read_csv("hol.csv")
-df = pd.read_csv("prob.csv")
-print(df)
-df['prob'] = dfo['prob']
-df['prob'] = df['prob'] / df['prob'].sum()
-print(df.sum())
-df.to_csv("normalized_prob_n.csv")
+
+
+
+set = PropertySet("test")
+gameS = Game()
+testb =Board(gameS)
+testp = Player("Green Demon",1,testb)
+
+test = Property("Go",set,110)
+print(getProbability(test))
+print(expected_value(player=testp,game_state=gameS,check_property = [test]))
