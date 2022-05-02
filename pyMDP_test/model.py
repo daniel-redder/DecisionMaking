@@ -46,31 +46,69 @@ MDP models
     if its greater than the value of the money that you are looking for then its just the value
     if its less then it is very low
     
+    not pay everything
+        or is impossible to do like selling a house on a property that doesn't have houses
+    
+    1 action: 
+    (avoid making a false decision) ie you cannot make a decision where it will 
+        
+    
+    
+        0: selling a house, 1: mortgaging a property, 2: making a trade 3: I can't do anything
+    
+    
+    if we mortgage a property
+    look at the   properties who are not mortgaged who argmax( mortgage funds gained - (expected value of the properties + the 10% cost to mortgage) )
     
     
 2) mdp buying a property  (consider cash on hand)
 
     looks at expected value gained from property vs initial cost
+    the reward function for this model if you decide not to buy must subtract the expected value of the property
     
+    0: don't buy, 1: buy
     
+    this agent doesn't bet
+    
+
 3) mdp for accepting declining a proposal
     
     is going to consider whether to accept or decline a proposal which is given as input. 
     it is going to consider the money exchanged and the expected value exchanged (which is really just one state)
 
-4) mdp which runs at the beginning of the round (consider cash on hand)
+    0: decline, 1: accept
+
+4)  subset mdps which runs at the beginning of the round (consider cash on hand)
 
    has 3 actions: 
-       if you are in jail do you pay to leave
-        (has the jail state)
-       do you unmortgage properties
-       do you build houses
-
-
+        mdp
+           if you are in jail do you pay to leave
+            (has the jail state)
+            
+            (0 occurs when they are not in jail)
+            0: does nothing, 1: pay to leave jail, 2: don't pay
+        
+        
+           do you unmortgage properties
+           0: do not unmortgage, 2: unmortgage 
+           (provided with candidate properties)
+           
+           get_unmortgage_cost()
+           0: no, 1: yes 
+        
+        
+           do you build houses
+            0: no, 1: yes
+            (if you can't build a house the model won't run)
+            
+            provide candidate properties which can be built upon
+        
+        loops until both actions are no
 """
 
 
-def figureMoney():
+
+
 
 
 
@@ -163,6 +201,7 @@ class mdpAristocrat(PlayerAIBase):
 
         example code:
                 if player.state.cash < 500:
+
             return [p for p in player.state.properties if p.is_mortgaged is False]
         """
 
