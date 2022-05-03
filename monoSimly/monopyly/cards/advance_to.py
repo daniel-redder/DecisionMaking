@@ -29,7 +29,7 @@ class AdvanceTo(Card):
         if (player_position > destination_square_position) and (destination_square_position != go_square_position):
             # The player has to pass Go to get to the destination...
             await Logger.log("{0} gets £200 for passing Go".format(current_player.name))
-            game.give_money_to_player(current_player, 200)
+            await game.give_money_to_player(current_player, 200)
 
         # We move the player to the destination...
         current_player.state.square = destination_square_position

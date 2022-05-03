@@ -33,7 +33,7 @@ def getProbability(property: Property):
 
 
 def expected_value(player, game_state, check_property: []):
-    maximum_turns = 500
+    maximum_turns = 30
     discount_factor = .9
 
     # syntax check #TODO
@@ -112,7 +112,7 @@ def cptValue(player, game_state, check_property: []):
     prosDWValueList = []
     cumulativeProsVal = []
 
-    maximum_turns = 500
+    maximum_turns = 30
     discount_factor = .9
 
     color_set_list = [x.property_set for x in check_property]
