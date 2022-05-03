@@ -1,7 +1,7 @@
 from .card import Card
 from ..squares import Square
 from ..utility import Logger
-
+import asyncio
 
 class AdvanceTo(Card):
     '''
@@ -33,7 +33,7 @@ class AdvanceTo(Card):
 
         # We move the player to the destination...
         current_player.state.square = destination_square_position
-        game.player_has_changed_square(current_player)
+        asyncio.run(game.player_has_changed_square(current_player))
 
 
 

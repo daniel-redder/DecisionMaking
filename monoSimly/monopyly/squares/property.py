@@ -35,14 +35,14 @@ class Property(Square):
         self.owner = None
 
     @property
-    async def mortgage_value(self):
+    def mortgage_value(self):
         '''
         The mortgage value
         '''
         return int(self.price / 2)
 
 
-    async def get_unmortgage_cost(self):
+    def get_unmortgage_cost(self):
 
         return int(self.price / 2)*1.1
 

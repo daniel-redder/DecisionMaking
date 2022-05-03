@@ -15,4 +15,4 @@ class CommunityChest(Square):
         '''
         Called when a player has landed on Community Chest.
         '''
-        game.state.board.community_chest_deck.take_card(game, player)
+        await game.state.board.community_chest_deck.take_card(game, player)

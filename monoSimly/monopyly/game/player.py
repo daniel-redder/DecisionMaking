@@ -61,7 +61,7 @@ class Player(object):
         '''
         return self.ai.get_name()
 
-    async def is_same_player(self, other):
+    def is_same_player(self, other):
         '''
         Returns true if the other player is the same as this one.
 

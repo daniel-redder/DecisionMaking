@@ -13,7 +13,7 @@ class playerOne(PlayerAIBase):
     She only buys the stations and Mayfair and Park Lane, and
     will enter into fairly generous deals to get hold of them.
     '''
-    def __init__(self,client:discord.client,member:discord.Member,bot:discord.ext.commands.bot):
+    def __init__(self,client:discord.client,member:discord.Member,bot:discord.ext.commands.bot,ctx):
         '''
         The 'constructor'.
         '''
@@ -21,6 +21,7 @@ class playerOne(PlayerAIBase):
         self.client = client
         self.bot = bot
         self.tired = False
+        self.ctx = ctx
 
 
 
@@ -29,7 +30,7 @@ class playerOne(PlayerAIBase):
 
         time.sleep(1)
 
-        output = await self.bot.wait_for('message',check=(lambda context: context.author == self.member),
+        output = await self.bot.wait_for('message',check=(lambda context: context.author == self.member and isinstance(context.channel,discord.DMChannel)),
                                          timeout=None)
 
 
@@ -37,6 +38,17 @@ class playerOne(PlayerAIBase):
 
     async def messager(self,message=""):
         self.client.loop.create_task(self.member.send(message))
+
+
+    async def channel_message(self,message=""):
+        self.client.loop.create_task(self.ctx.send(message))
+
+
+    async def player_landed_on_square(self, game_state, square, player):
+        if player.is_same_player(self):
+            await self.channel_message(f"{self.get_name()} moved to {square.name}")
+            await self.messager(f"you moved to {square.name}")
+
 
 
     def get_name(self):
@@ -66,6 +78,19 @@ class playerOne(PlayerAIBase):
     async def start_of_turn(self, game_state, player):
         self.tired=False
 
+        hold_dic = []
+
+        if player.is_same_player(self):
+            for x in Square.Name.hold_dic:
+                val =  game_state.board.get_square_by_name(x)
+                hold_dic.append(val)
+
+            properties_owned_us = [x for x in hold_dic if x.owner is player]
+
+            out_string = f"Player 1's Turn round {player.state.turns_played} \n{self.get_name()} cash: {player.state.cash}\n{self.get_name()} properties \n ---------"
+            for x in properties_owned_us: out_string = out_string +f"\n{x}"
+
+            await self.channel_message(out_string)
 
 
     async def propose_deal(self, game_state, player):
@@ -204,7 +229,7 @@ class playerOne(PlayerAIBase):
 
         out_string = ""
         for x in range(len(unmort_prop)): out_string = out_string + f"\n {x}: {unmort_prop[x]}"
-        self.messager(out_string)
+        await self.messager(out_string)
         choicer = await self.passToBot("Please enter a comma seperated list of properties to mortgage.")
 
         if "," in choicer:
@@ -218,15 +243,20 @@ class playerOne(PlayerAIBase):
         '''
         Sophie unmortgages if she is flush with cash.
         '''
+
+        unmort_prop = [p for p in player.state.properties if p.is_mortgaged]
+
+        if len(unmort_prop) == 0: return []
+
         test = await self.passToBot("Do you wish to unmortgage properties respond: yes, or no")
 
         if "no" in test.lower(): return []
 
-        unmort_prop = [p for p in player.state.properties if p.is_mortgaged]
+
 
         out_string = ""
         for x in range(len(unmort_prop)): out_string = out_string + f"\n {x}: {unmort_prop[x]}"
-        self.messager(out_string)
+        await self.messager(out_string)
         choicer = await self.passToBot("Please enter a comma seperated list of properties to unmortgage.")
 
         if "," in choicer:

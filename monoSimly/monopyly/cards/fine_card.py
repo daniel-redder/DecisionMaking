@@ -1,5 +1,5 @@
 from .card import Card
-
+import asyncio
 
 class FineCard(Card):
     '''
@@ -16,7 +16,8 @@ class FineCard(Card):
         '''
         Takes the fine from the player.
         '''
-        game.take_money_from_player(current_player, self.fine)
+
+        asyncio.run(game.take_money_from_player(current_player, self.fine))
 
 
 

@@ -17,5 +17,5 @@ class GoToJailSquare(Square):
         '''
         Sends the player to jail.
         '''
-        game.send_player_to_jail(player)
+        await game.send_player_to_jail(player)
 

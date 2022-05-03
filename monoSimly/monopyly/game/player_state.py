@@ -49,7 +49,7 @@ class PlayerState(object):
         self.ai_processing_seconds_used = 0.0
         self.turns_played = 0
 
-    async def get_number_of_houses_and_hotels(self, board):
+    def get_number_of_houses_and_hotels(self, board):
         '''
         Returns the number of houses and hotels owned by this player.
         '''
@@ -69,7 +69,7 @@ class PlayerState(object):
         return number_of_houses, number_of_hotels
 
     @property
-    async def number_of_get_out_of_jail_free_cards(self):
+    def number_of_get_out_of_jail_free_cards(self):
         '''
         The number of GOOJF cards the player has.
         '''

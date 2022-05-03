@@ -49,8 +49,8 @@ async def game(ctx,playerOne:discord.Member,playerTwo:discord.Member):
 
     await Logger.add_handler(FileLogHandler(f"data/{playerOne.display_name}_{playerTwo.display_name}_{random.randint(1,300)}.log", Logger.INFO))
     game = Game()
-    playerOne_ai = playerOneAI(client,playerOne,bot)
-    playerTwo_ai = playerTwoAI(client,playerTwo,bot)
+    playerOne_ai = playerOneAI(client,playerOne,bot,ctx)
+    playerTwo_ai = playerTwoAI(client,playerTwo,bot,ctx)
     await game.add_player(playerOne_ai)
     await game.add_player(playerTwo_ai)
     await game.play_game()

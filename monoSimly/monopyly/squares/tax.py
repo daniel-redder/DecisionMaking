@@ -17,6 +17,6 @@ class Tax(Square):
         '''
         Called when the square is landed on.
         '''
-        game.take_money_from_player(player, self.tax)
+        await game.take_money_from_player(player, self.tax)
 
 
