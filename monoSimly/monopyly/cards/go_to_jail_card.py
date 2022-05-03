@@ -8,9 +8,9 @@ class GoToJailCard(Card):
     '''
     Go to Jail. Go directly to jail. Do not pass Go. Do not collect £200.
     '''
-    def play(self, game, current_player):
+    async def play(self, game, current_player):
         '''
         Moves the player to Jail.
         '''
-        game.send_player_to_jail(current_player)
+        await game.send_player_to_jail(current_player)
 

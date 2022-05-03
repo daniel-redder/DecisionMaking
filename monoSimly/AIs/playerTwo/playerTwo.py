@@ -74,9 +74,26 @@ class playerTwo(PlayerAIBase):
             await self.messager("not purchasing")
             return PlayerAIBase.Action.DO_NOT_BUY
 
-
     async def start_of_turn(self, game_state, player):
-        self.tired=False
+        self.tired = False
+
+        hold_dic = []
+
+        if player.is_same_player(self):
+            for x in Square.Name.hold_dic:
+                val = game_state.board.get_square_by_name(x)
+                hold_dic.append(val)
+
+            properties_owned_us = [x for x in hold_dic if x.owner is player]
+
+            out_string = f"{self.get_name()}'s Turn round {player.state.turns_played} \n{self.get_name()} cash: {player.state.cash}\n{self.get_name()} properties \n ---------"
+            for x in properties_owned_us: out_string = out_string + f"\n{x}"
+
+            await self.channel_message(out_string)
+
+
+    async def show_vals(self, game_state, player):
+
 
         hold_dic = []
 
@@ -87,10 +104,10 @@ class playerTwo(PlayerAIBase):
 
             properties_owned_us = [x for x in hold_dic if x.owner is player]
 
-            out_string = f"Player 1's Turn round {player.state.turns_played} \n{self.get_name()} cash: {player.state.cash}\n{self.get_name()} properties \n ---------"
+            out_string = f"{self.get_name()}'s Turn round {player.state.turns_played} \n{self.get_name()} cash: {player.state.cash}\n{self.get_name()} properties \n ---------"
             for x in properties_owned_us: out_string = out_string +f"\n{x}"
 
-            await self.channel_message(out_string)
+            await self.messager(out_string)
 
 
     async def propose_deal(self, game_state, player):
@@ -100,6 +117,9 @@ class playerTwo(PlayerAIBase):
         If any other player has one of the properties we want, we
         offer them 2x the price for it.
         '''
+
+        await self.show_vals(game_state,player)
+
         deal_proposal = DealProposal()
 
         hold_dic = []
@@ -125,7 +145,9 @@ class playerTwo(PlayerAIBase):
         await self.messager("what the fuck")
         await self.messager(out_string)
 
+
         tradeFor = await self.passToBot("Please enter a comma seperated list of the index of properties you want to trade for none if you don't want to trade for a property, or stop if you don't want to trade")
+
 
         if "stop" in tradeFor.lower():
             self.tired = True
@@ -133,40 +155,73 @@ class playerTwo(PlayerAIBase):
 
         moneyFor = await self.passToBot("Please enter a integer ammount of cash you want to trade for (ie recieve), or none:")
 
-        tradeTo = await self.passToBot("Please enter a comma seperated list of the index of properties you want to trade with (give), or none:")
+        if len(properties_owned_us) > 0:
+            tradeTo = await self.passToBot("Please enter a comma seperated list of the index of properties you want to trade with (give), or none:")
+        else:
+            tradeTo = "none"
 
         moneyTo = await self.passToBot("Please enter a integer ammount of cash you want to trade with  (ie give), or none:")
 
         try:
             if "none" in moneyFor.lower(): moneyFor = 0
-            else: moneyFor = int(moneyFor)
+            else:
+                moneyFor = int(moneyFor)
             if "none" in moneyTo.lower(): moneyTo = 0
             else: moneyTo = int(moneyTo)
         except:
             print("issue calculating money to-from in trade")
 
         try:
-            if "none" in tradeFor: tradeFor = []
-            elif "," in tradeFor: tradeFor = [int(x) for x in tradeFor.split(",")]
+            print(type(tradeFor),tradeTo)
+            if "none" in tradeFor.lower(): tradeFor = []
+            elif "," in tradeFor.lower(): tradeFor = [int(x) for x in tradeFor.split(",")]
             else: tradeFor = [int(tradeFor)]
 
-            if "none" in tradeTo: tradeTo = []
-            if "," in tradeTo: tradeTo = [int(x) for x in tradeTo.split(",")]
+            if "none" in tradeTo.lower(): tradeTo = []
+            elif "," in tradeTo: tradeTo = [int(x) for x in tradeTo.split(",")]
             else: tradeTo = [int(tradeTo)]
-        except:
-            print("error in trade for int conv")
+        except Exception as e:
+            print("error in trade for int conv",e)
             return None
 
 
         self.tired = False
+
+        print(moneyTo,moneyFor)
 
         return DealProposal(
             properties_wanted=[x for x in properties_owned if properties_owned.index(x) in tradeFor],
             properties_offered=[x for x in properties_owned_us if properties_owned_us.index(x) in tradeTo],
             minimum_cash_wanted=moneyFor,
             maximum_cash_offered=moneyTo,
-            propose_to_player=properties_owned[0].owner
+            propose_to_player=[x for x in game_state.players if not player.is_same_player(x)][0]
         )
+
+    async def money_taken(self, player, amount):
+        await self.messager(f"You paid {amount}")
+
+
+    async def deal_proposed(self, game_state, player, deal_proposal):
+
+        #await self.show_vals(game_state,player)
+
+        await self.show_vals(game_state, player)
+
+        print(deal_proposal.minimum_cash_wanted,deal_proposal.maximum_cash_offered)
+
+        out_text = "Properties Wanted:"
+        for x in deal_proposal.properties_wanted: out_text=out_text+f"\n{x.name}"
+        out_text = out_text + "\nProperties Given"
+        for x in deal_proposal.properties_offered: out_text=out_text+f"\n{x.name}"
+        out_text = out_text + f"\nMoney Requested: ${deal_proposal.minimum_cash_wanted}"
+        out_text = out_text + f"\n Money Given: ${deal_proposal.maximum_cash_offered}"
+
+        await self.messager(out_text)
+
+        a_d =  await self.passToBot("Do you accept, or decline the offer?")
+
+        if "accept" in a_d.lower(): return DealResponse(action=DealResponse.Action.ACCEPT,maximum_cash_offered=deal_proposal.minimum_cash_wanted,minimum_cash_wanted=0)
+        else: return DealResponse(action = DealResponse.Action.REJECT)
 
 
 
@@ -221,11 +276,17 @@ class playerTwo(PlayerAIBase):
         '''
         Sophie mortgages if she is short of cash.
         '''
+
+        await self.show_vals(game_state, player)
+
+        unmort_prop = [p for p in player.state.properties if p.is_mortgaged is False]
+
+        if len(unmort_prop) == 0: return []
+
         test = await self.passToBot("Do you wish to mortgage properties respond: yes, or no")
 
         if "no" in test.lower(): return []
 
-        unmort_prop = [p for p in player.state.properties if p.is_mortgaged is False]
 
         out_string = ""
         for x in range(len(unmort_prop)): out_string = out_string + f"\n {x}: {unmort_prop[x]}"
@@ -239,10 +300,18 @@ class playerTwo(PlayerAIBase):
         return choicer
 
 
+    async def get_out_of_jail(self, game_state, player):
+        await self.show_vals(game_state,player)
+        choice = await self.passToBot(f"Do you want to 'pay' to leave jail or 'stay' and wait for a double (after {3-player.state.number_of_turns_in_jail} turns you will pay)")
+        if "pay" in choice.lower(): return PlayerAIBase.Action.BUY_WAY_OUT_OF_JAIL
+        else: return PlayerAIBase.Action.STAY_IN_JAIL
+
     async def unmortgage_properties(self, game_state, player):
         '''
         Sophie unmortgages if she is flush with cash.
         '''
+
+        await self.show_vals(game_state, player)
 
         unmort_prop = [p for p in player.state.properties if p.is_mortgaged]
 

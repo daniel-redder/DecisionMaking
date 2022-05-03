@@ -8,7 +8,7 @@ class FileLogHandler(object):
     Messages at Warning level or greater are prefixed with the log level.
     '''
     def __init__(self, filename, minimum_log_level=Logger.WARNING):
-        self.file = open(filename, "w")
+        self.file = open(filename, "w+")
         self.minimum_log_level = minimum_log_level
 
     async def handle_log_message(self, message, level, indent_level):

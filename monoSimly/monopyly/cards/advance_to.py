@@ -15,7 +15,7 @@ class AdvanceTo(Card):
         '''
         self.destination_square_name = square_name
 
-    def play(self, game, current_player):
+    async def play(self, game, current_player):
         '''
         We move the player to the new square, giving them
         £200 if they pass go.
@@ -28,12 +28,12 @@ class AdvanceTo(Card):
         player_position = current_player.state.square
         if (player_position > destination_square_position) and (destination_square_position != go_square_position):
             # The player has to pass Go to get to the destination...
-            Logger.log("{0} gets £200 for passing Go".format(current_player.name))
+            await Logger.log("{0} gets £200 for passing Go".format(current_player.name))
             game.give_money_to_player(current_player, 200)
 
         # We move the player to the destination...
         current_player.state.square = destination_square_position
-        asyncio.run(game.player_has_changed_square(current_player))
+        await game.player_has_changed_square(current_player)
 
 
 

@@ -26,12 +26,12 @@ class PropertySet(object):
         self.properties = []
         self.set_enum = set_enum
 
-
-    def __hash__(self):
-        return hashlib.md5(self.set_enum)
-
-    def __eq__(self, other):
-        return self.__hash__() == other
+    # 
+    # def __hash__(self):
+    #     return hashlib.md5(self.set_enum)
+    #
+    # def __eq__(self, other):
+    #     return self.__hash__() == other
 
 
     def __repr__(self):

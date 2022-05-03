@@ -6,7 +6,7 @@ class TenPoundFineOrTakeAChance(Card):
     Pay a £10 fine or take a Chance.
     '''
 
-    def play(self, game, current_player):
+    async def play(self, game, current_player):
         '''
         We ask the player whether they want to pay the fine
         or take a Chance.

@@ -5,7 +5,7 @@ class GoBackThreeSpaces(Card):
     '''
     Go back three spaces.
     '''
-    def play(self, game, current_player):
+    async def play(self, game, current_player):
         # We defer this import to avoid a circular reference...
         from ..game import Board
 

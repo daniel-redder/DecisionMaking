@@ -13,7 +13,7 @@ class GoBack(Card):
         '''
         self.destination_square_name = destination_square_name
 
-    def play(self, game, current_player):
+    async def play(self, game, current_player):
         '''
         Moves the player to the destination square.
         '''

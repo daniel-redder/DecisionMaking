@@ -12,10 +12,10 @@ class RewardCard(Card):
         '''
         self.reward = reward
 
-    def play(self, game, current_player):
+    async def play(self, game, current_player):
         '''
         Gives the reward to the player.
         '''
-        game.give_money_to_player(current_player, self.reward)
+        await game.give_money_to_player(current_player, self.reward)
 
 

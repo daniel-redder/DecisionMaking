@@ -6,7 +6,7 @@ class ItIsYourBirthday(Card):
     '''
     It is your birthday. Collect £10 from each player.
     '''
-    def play(self, game, current_player):
+    async def play(self, game, current_player):
         '''
         The player gets £10 from each other player. ( £100 if the player
         does not say "Happy Birthday!")

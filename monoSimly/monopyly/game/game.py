@@ -213,8 +213,8 @@ class Game(object):
                 break
 
         # We show the processing time remaining for the player...
-        await Logger.log(
-            "Processing time remaining={0}sec".format(current_player.state.ai_processing_seconds_remaining))
+        #await Logger.log(
+         #   "Processing time remaining={0}sec".format(current_player.state.ai_processing_seconds_remaining))
 
         # We check if any players went bankrupt during this turn...
         await self._check_for_bankrupt_players()
@@ -372,7 +372,7 @@ class Game(object):
 
         # We try taking the money from the player (they have a chance to make
         # deals or sell property when this happens)...
-        amount_taken = self.take_money_from_player(from_player, amount)
+        amount_taken = await self.take_money_from_player(from_player, amount)
         if from_player.state.cash >= 0:
             # They had enough money so we give it to the to_player...
             await self.give_money_to_player(to_player, amount)
@@ -843,7 +843,7 @@ class Game(object):
             if square.owner is not current_player:
                 return
 
-            unmortgage_cost += int(await square.mortgage_value * 1.1)
+            unmortgage_cost += int( square.mortgage_value * 1.1)
 
         # We take the money from the player...
         await self.take_money_from_player(current_player, unmortgage_cost)
@@ -878,18 +878,22 @@ class Game(object):
             current_player.ai.propose_deal,
             self.state,
             current_player)
+        #print(proposal.minimum_cash_wanted,proposal.maximum_cash_offered)
         if not proposal:
             return
 
         # We find the player the deal is being proposed to (checking that the
         # player is valid first)...
         if proposal.propose_to_player is None:
+            print("proposed a null deal")
             await current_player.call_ai(current_player.ai.deal_result, PlayerAIBase.DealInfo.INVALID_DEAL_PROPOSED)
             return
+
         proposed_to_player = proposal.propose_to_player
 
         # Sometimes AIs try to propose a deal to themselves...
         if current_player is proposed_to_player:
+            print("proposed deal to current player")
             await current_player.call_ai(current_player.ai.deal_result, PlayerAIBase.DealInfo.INVALID_DEAL_PROPOSED)
             return
 
@@ -904,7 +908,7 @@ class Game(object):
         async def validate_properties(player, properties):
             for property in properties:
                 # Does the player own the property?
-                if player.owns_properties([property]) is False:
+                if await player.owns_properties([property]) is False:
                     return False
 
                 # The player owns the property, but if it has houses we need
@@ -916,11 +920,11 @@ class Game(object):
                         return False
             return True
 
-        if validate_properties(current_player, proposal.properties_offered) is False:
+        if await validate_properties(current_player, proposal.properties_offered) is False:
             await current_player.call_ai(current_player.ai.deal_result, PlayerAIBase.DealInfo.INVALID_DEAL_PROPOSED)
             await Logger.dedent()
             return
-        if validate_properties(proposed_to_player, proposal.properties_wanted) is False:
+        if await validate_properties(proposed_to_player, proposal.properties_wanted) is False:
             await current_player.call_ai(current_player.ai.deal_result, PlayerAIBase.DealInfo.INVALID_DEAL_PROPOSED)
             await Logger.dedent()
             return
@@ -929,8 +933,8 @@ class Game(object):
         # and setting the player who proposed the deal...
         maximum_cash_offered = proposal.maximum_cash_offered
         minimum_cash_wanted = proposal.minimum_cash_wanted
-        proposal.maximum_cash_offered = 0
-        proposal.minimum_cash_wanted = 0
+        #proposal.maximum_cash_offered = 0
+        #proposal.minimum_cash_wanted = 0
         proposal.proposed_by_player = current_player
 
         response = await proposed_to_player.call_ai(
@@ -976,14 +980,14 @@ class Game(object):
         cash_transfer_from_proposer_to_proposee = int(cash_transfer_from_proposer_to_proposee)
         if cash_transfer_from_proposer_to_proposee > 0:
             # We transfer cash from the proposer to the proposee...
-            result = self.transfer_cash(
+            result = await self.transfer_cash(
                 current_player,
                 proposed_to_player,
                 cash_transfer_from_proposer_to_proposee,
                 Game.Action.ROLLBACK_ON_INSUFFICIENT_CASH)
         elif cash_transfer_from_proposer_to_proposee < 0:
             # We transfer cash from the proposee to the proposer...
-            result = self.transfer_cash(
+            result = await self.transfer_cash(
                 proposed_to_player,
                 current_player,
                 cash_transfer_from_proposer_to_proposee * -1,
@@ -1116,13 +1120,13 @@ class Game(object):
             self.winner = None
             return
 
-        max_net_worth = max(player.net_worth for player in self.state.players)
-        winning_players = [player for player in self.state.players if player.net_worth == max_net_worth]
+        max_net_worth = max(await player.net_worth for player in self.state.players)
+        winning_players = [player for player in self.state.players if await player.net_worth == max_net_worth]
 
         # If there is only one player, then they have won...
         if(len(winning_players) == 1):
             self.winner = winning_players[0]
-            await Logger.log("Game over. Winner is: {0}".format( await self.winner.ai.get_name()))
+            await Logger.log("Game over. Winner is: {0}".format( self.winner.ai.get_name()))
         else:
             self.winner = None
             await Logger.log("Game over. Draw.")

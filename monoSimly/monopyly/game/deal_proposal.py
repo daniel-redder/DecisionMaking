@@ -38,7 +38,7 @@ class DealProposal(object):
         Renders the proposal as a string.
         '''
 
-        return "Offered: {0}. Wanted: {1}".format(self.properties_offered, self.properties_wanted)
+        return "Offered: {0}, Wanted: {1}\n Offered: ${2}, Wanted: ${3}".format(self.properties_offered, self.properties_wanted,self.maximum_cash_offered,self.minimum_cash_wanted)
 
     @property
     async def deal_proposed(self):

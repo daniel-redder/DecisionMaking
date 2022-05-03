@@ -12,12 +12,12 @@ class FineCard(Card):
         '''
         self.fine = fine
 
-    def play(self, game, current_player):
+    async def play(self, game, current_player):
         '''
         Takes the fine from the player.
         '''
 
-        asyncio.run(game.take_money_from_player(current_player, self.fine))
+        await game.take_money_from_player(current_player, self.fine)
 
 
 

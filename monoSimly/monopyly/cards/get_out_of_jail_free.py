@@ -14,7 +14,7 @@ class GetOutOfJailFree(Card):
         # after it has been played.
         self.deck = deck
 
-    def put_back_in_deck(self):
+    async def put_back_in_deck(self):
         '''
         Puts the card back in the deck.
 

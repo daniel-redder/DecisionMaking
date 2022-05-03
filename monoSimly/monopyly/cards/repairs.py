@@ -14,7 +14,7 @@ class Repairs(Card):
         self.amount_per_house = amount_per_house
         self.amount_per_hotel = amount_per_hotel
 
-    def play(self, game, current_player):
+    async def play(self, game, current_player):
         '''
         Takes money from the player depending on the number of houses
         and hotel they have.
@@ -23,11 +23,11 @@ class Repairs(Card):
         number_of_houses, number_of_hotels = current_player.state.get_number_of_houses_and_hotels(game.state.board)
         amount = self.amount_per_house * number_of_houses + self.amount_per_hotel * number_of_hotels
 
-        Logger.log("{0} has been assessed for street repairs".format(current_player.name))
-        Logger.indent()
+        await Logger.log("{0} has been assessed for street repairs".format(current_player.name))
+        await Logger.indent()
 
         # And take the money...
         game.take_money_from_player(current_player, amount)
 
-        Logger.dedent()
+        await Logger.dedent()
 

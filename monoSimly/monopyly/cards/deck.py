@@ -47,7 +47,7 @@ class Deck(object):
             del self.cards[index]
         else:
             # The card is not Get Out Of Jail Free, so we can play it now...
-            card.play(game, player)
+            await card.play(game, player)
 
     @property
     def number_of_cards(self):
