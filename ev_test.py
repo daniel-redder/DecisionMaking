@@ -179,6 +179,9 @@ testb = Board(gameS)
 testp = Player("Green Demon", 1, testb)
 
 test = Property("Go", set, 110)
+
+
+
 print(getProbability(test))
 print(expected_value(player=testp, game_state=gameS, check_property=[test]))
 print(cptValue(player= testp, game_state=gameS,check_property=[test]))

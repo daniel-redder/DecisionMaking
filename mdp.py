@@ -3,6 +3,12 @@ import numpy as np
 
 #only works on 30 maximum turns
 
+
+
+
+
+
+
 class mdp():
     def __init__(self,n_states):
 
@@ -46,17 +52,17 @@ class mdp():
 
         #  0,1,2  (ignoring houses)
         #we are considering that all properties of the same color have the same rent
-        color_set_two_length = 4
+        color_set_two_length = 3
         color_set_two_statespace = [color_set_two_length for x in range(2)]
 
 
         #  0,1,2 (three house groups)
-        color_set_three_length = 4
+        color_set_three_length = 3
         color_set_three_statespace = [color_set_three_length for x in range(6)]
 
 
         #0,1,2
-        utilities_length = 4
+        utilities_length = 3
         utilities_statespace = [utilities_length for x in range(2)]
         station_statespace = [utilities_length for x in range(4)]
 
@@ -72,7 +78,7 @@ class mdp():
         joint_statespace = []
 
 
-        joint_statespace.append(action_dimensions)
+        #joint_statespace.append(action_dimensions)
         joint_statespace.append(turn_statespace)
         joint_statespace.append(cash_statespace)
 
@@ -97,50 +103,58 @@ class mdp():
 
         #self.b.reshape((2,3,6,3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3))
 
-        for x in range(self.b.shape[0]):
+        #for action in range(self.b.shape[0]):
             #every property given a action
-            action = self.b[x]
+            #loop_action = self.b[action]
 
 
             #action don't buy
-            if x==0:
+            #if action==0:
 
 
+        stateSpace = []
 
-                for turn in action:
+        for turn in range(self.b.shape[0]):
+            for cash in range(4):
+                for a in range(4):
+                    for b in range(4):
+                        for c in range(4):
+                            for d in range(4):
+                                for e in range(4):
+                                    for f in range(4):
+                                        for g in range(4):
+                                            for h in range(4):
+                                                for i in range(4):
+                                                    for j in range(4):
+                                                        for k in range(4):
+                                                            for l in range(4):
+                                                                for m in range(4):
+                                                                    for n in range(4):
 
+                                                                        state = [turn,cash,a, b, c, d, e, f, g, h, i, j, k, l, m, n]
+                                                                        if state[2:].count(2) > 1:
+                                                                            stateSpace.append(state)
 
+        #0,1  buy don't buy
+        for action in range(action_dimensions):
+            if action == 0:
+                for state in range(len(stateSpace)):
+                    pos = stateSpace[state].index(2)
+                    stateSpace[state][pos] = 0
 
+            elif action == 1:
+                for state in range(len(stateSpace)):
+                    pos = stateSpace[state].index(2)
+                    #we have to consider the cost to purchase the most expensive property from a set
+                    price=max_price(pos)
 
-                    #30 turns left
-                    if turn == 0:
+                    #accessing the money state
+                    if stateSpace[state][1]*200 > price:
                         pass
-
-                    #18 turns left
-                    elif turn == 1:
-                        pass
+                    else:
+                        stateSpace[state][pos] = 0
 
 
-                    #5 turns left
-                    elif turn == 2:
-                        pass
-
-
-            #action buy
-            elif x==1:
-                for turn in action:
-                    # 30 turns left
-                    if turn == 0:
-                        pass
-
-                    # 18 turns left
-                    elif turn == 1:
-                        pass
-
-
-                    # 5 turns left
-                    elif turn == 2:
-                        pass
 
 
 
