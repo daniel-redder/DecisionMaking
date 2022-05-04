@@ -3,7 +3,7 @@ import numpy as np
 import monopyly.monopyly
 from monopyly.monopyly import *
 #only works on 30 maximum turns
-
+import copy
 
 
 
@@ -133,19 +133,28 @@ class mdp():
                                                                     for n in range(2):
 
                                                                         state = [turn,cash,a, b, c, d, e, f, g, h, i, j, k, l, m, n]
-                                                                        if state[2:].count(1) > 1:
+                                                                        if state[2:].count(1) == 1:
+                                                                            #print(state)
                                                                             stateSpace.append(state)
+
+
+        dont_buy_state = copy.deepcopy(stateSpace)
+        buy_state = copy.deepcopy(stateSpace)
+        print(action_dimensions)
 
         #0,1  buy don't buy
         for action in range(action_dimensions):
             if action == 0:
                 for state in range(len(stateSpace)):
-                    pos = stateSpace[state].index(1)
-                    stateSpace[state][pos] = 0
+                    print(stateSpace[state],state)
+                    pos = stateSpace[state][2:].index(1)+2
+                    dont_buy_state[state][pos] = 0
+                    print(stateSpace[state])
 
             elif action == 1:
                 for state in range(len(stateSpace)):
-                    pos = stateSpace[state].index(1)
+                    print(stateSpace[state],"what")
+                    pos = stateSpace[state][2:].index(1)+2
                     #we have to consider the cost to purchase the most expensive property from a set
                     price=self.max_price(pos)
 
@@ -153,7 +162,7 @@ class mdp():
                     if stateSpace[state][1]*200 > price:
                         pass
                     else:
-                        stateSpace[state][pos] = 0
+                        buy_state[state][pos] = 0
 
 
     def max_price(self,pos):
@@ -211,8 +220,30 @@ class mdp():
             #water
             return max([x.price for x in self.game_state.board.get_property_set("Utility").properties])
 
+        else:
+            print(pos," pos what")
 
         #print(self.b.shape)
+
+
+"""
+Reward function
+(S,A)
+look at all the states
+if action is do not buy:
+calculate  the averaged discounted expected value across all (0) state properties which is all properties & the reward is:  cash - expected value
+
+there is a cash state 
+that state * 200 = cash  (0-3)
+
+if action is do buy:
+check if there exists a property with state 1 (you own the property)
+if so: reward is: cash - price + expected value of that property - all other expected values
+else: reward is: cash - all expected values
+
+"""
+
+
 
 
 
@@ -228,4 +259,4 @@ testp = Player("Green Demon", 1, testb)
 test = Property("Go", set, 110)
 
 model = mdp(2,gameS.state)
-print(model.max_price(4))
+print(model.max_price(7))
