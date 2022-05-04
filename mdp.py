@@ -51,19 +51,19 @@ class mdp():
         self.game_state = game_state
 
 
-        #  0,1,2  (ignoring houses)
+        #  0,1  (ignoring houses)
         #we are considering that all properties of the same color have the same rent
-        color_set_two_length = 3
+        color_set_two_length = 2
         color_set_two_statespace = [color_set_two_length for x in range(2)]
 
 
-        #  0,1,2 (three house groups)
-        color_set_three_length = 3
+        #  0,1 (three house groups)
+        color_set_three_length = 2
         color_set_three_statespace = [color_set_three_length for x in range(6)]
 
 
         #0,1,2
-        utilities_length = 3
+        utilities_length = 2
         utilities_statespace = [utilities_length for x in range(2)]
         station_statespace = [utilities_length for x in range(4)]
 
@@ -117,35 +117,35 @@ class mdp():
 
         for turn in range(self.b.shape[0]):
             for cash in range(4):
-                for a in range(4):
-                    for b in range(4):
-                        for c in range(4):
-                            for d in range(4):
-                                for e in range(4):
-                                    for f in range(4):
-                                        for g in range(4):
-                                            for h in range(4):
-                                                for i in range(4):
-                                                    for j in range(4):
-                                                        for k in range(4):
-                                                            for l in range(4):
-                                                                for m in range(4):
-                                                                    for n in range(4):
+                for a in range(2):
+                    for b in range(2):
+                        for c in range(2):
+                            for d in range(2):
+                                for e in range(2):
+                                    for f in range(2):
+                                        for g in range(2):
+                                            for h in range(2):
+                                                for i in range(2):
+                                                    for j in range(2):
+                                                        for k in range(2):
+                                                            for l in range(2):
+                                                                for m in range(2):
+                                                                    for n in range(2):
 
                                                                         state = [turn,cash,a, b, c, d, e, f, g, h, i, j, k, l, m, n]
-                                                                        if state[2:].count(2) > 1:
+                                                                        if state[2:].count(1) > 1:
                                                                             stateSpace.append(state)
 
         #0,1  buy don't buy
         for action in range(action_dimensions):
             if action == 0:
                 for state in range(len(stateSpace)):
-                    pos = stateSpace[state].index(2)
+                    pos = stateSpace[state].index(1)
                     stateSpace[state][pos] = 0
 
             elif action == 1:
                 for state in range(len(stateSpace)):
-                    pos = stateSpace[state].index(2)
+                    pos = stateSpace[state].index(1)
                     #we have to consider the cost to purchase the most expensive property from a set
                     price=self.max_price(pos)
 
