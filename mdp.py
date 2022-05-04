@@ -62,7 +62,7 @@ class mdp():
         color_set_three_statespace = [color_set_three_length for x in range(6)]
 
 
-        #0,1,2
+        #0,1
         utilities_length = 2
         utilities_statespace = [utilities_length for x in range(2)]
         station_statespace = [utilities_length for x in range(4)]
@@ -139,7 +139,26 @@ class mdp():
 
 
         dont_buy_state = copy.deepcopy(stateSpace)
+
+
+
+
         buy_state = copy.deepcopy(stateSpace)
+
+        self.reward_list = [[0,[]],[1,[]]]
+
+        #Test game to generate rewards
+        gameS = Game()
+        testb = Board(gameS)
+        testp = Player("Green Demon", 1, testb)
+        testb.get_property_set("Utility")
+        index_to_property_set = {2:testb.get_property_set("Brown"), 3:testb.get_property_set("Dark blue"),
+                                    4:testb.get_property_set("Light blue"), 5:testb.get_property_set("Purple"),
+                                    6:testb.get_property_set("Orange"), 7:testb.get_property_set("Red"),
+                                    8:testb.get_property_set("Yellow"),9:testb.get_property_set("Green"),10:testb.get_property_set("Utility"),
+                                    11:testb.get_property_set("Utility"),12:testb.get_property_set("Station"),13:testb.get_property_set("Station"),
+                                    14:testb.get_property_set("Station"),15:testb.get_property_set("Station")}
+
         print(action_dimensions)
 
         #0,1  buy don't buy
@@ -149,6 +168,19 @@ class mdp():
                     print(stateSpace[state],state)
                     pos = stateSpace[state][2:].index(1)+2
                     dont_buy_state[state][pos] = 0
+
+                    if not pos == len(index_to_property_set) - 1:
+                        prop_enemy_color=[index_to_property_set[x] for x in range(2, pos)] + [index_to_property_set[x] for x in
+                            range(pos + 1, len(index_to_property_set) - 1)]
+
+                    else:
+                        prop_enemy_color= [index_to_property_set[x] for x in range(2,pos)]
+
+                    self.reward_list[0][1].append(self.reward_value(player=testp, game_state=gameS.state, cash = stateSpace[state][1], action = action, prop_state = 0
+                                                          ,purchased_prop=index_to_property_set[pos], prop_enemy_color=prop_enemy_color))
+
+
+
                     print(stateSpace[state])
 
             elif action == 1:
@@ -158,11 +190,25 @@ class mdp():
                     #we have to consider the cost to purchase the most expensive property from a set
                     price=self.max_price(pos)
 
+                    if not pos == len(index_to_property_set) - 1:
+                        prop_enemy_color = [index_to_property_set[x] for x in range(2, pos)] + [index_to_property_set[x]
+                                                                                                for x in
+                                                                                                range(pos + 1, len(
+                                                                                                    index_to_property_set) - 1)]
+
+                    else:
+                        prop_enemy_color = [index_to_property_set[x] for x in range(2, pos)]
+
+
                     #accessing the money state
                     if stateSpace[state][1]*200 > price:
+                        self.reward_list[1][1].append(self.reward_value(player=testp, game_state=gameS.state, cash = stateSpace[state][1], action = action, prop_state = 1
+                                                          ,purchased_prop=index_to_property_set[pos], prop_enemy_color=prop_enemy_color))
                         pass
                     else:
                         buy_state[state][pos] = 0
+                        self.reward_list[1][1].append(self.reward_value(player=testp, game_state=gameS.state, cash = stateSpace[state][1], action = action, prop_state = 0
+                                                          ,purchased_prop=index_to_property_set[pos], prop_enemy_color=prop_enemy_color))
 
 
     def max_price(self,pos):
@@ -225,6 +271,60 @@ class mdp():
 
         #print(self.b.shape)
 
+    def dice_dist(self):
+        return 2 * 1 / 36 + 3 * 1 / 18 + 4 * 3 / 36 + 5 * 1 / 9 + 6 * (1 / 9 + 1 / 36) + 7 * 1 / 6 + 8 * (
+                    1 / 9 + 1 / 36) + 9 * 1 / 9 + 10 * (3 / 36) + 11 * 1 / 18 + 12 * 1 / 36
+
+
+
+    def avg_expected_value(self,player, game_state: monopyly.monopyly.game.GameState,
+                           property_set_colors: monopyly.monopyly.PropertySet, current_turn=0):
+        # default value for max turns in monopoly ai competition
+        maximum_turns = 30
+
+        # value we choose
+        discount_factor = .9
+
+        # for every color in color_set_list
+        # for every property in color append to list
+        # for every property get property.rent[0] avg()
+
+        color_name = property_set_colors.set_enum
+        property_set = property_set_colors.properties
+
+        # non averaged
+        if color_name == "Utility":
+            return .5 * (4 * (self.dice_dist())) + .5 * (10 * (self.dice_dist()))
+
+
+        elif color_name == "Station":
+            return (200 + 100 + 50 + 25) / 4
+
+        # averaged
+        property_values = [x.rents[0] for x in property_set]
+        return sum([sum(property_values) / len(property_values) * pow(discount_factor, x) for x in
+                    range(maximum_turns - current_turn)])
+
+
+
+    def reward_value(self, player, game_state, cash, action, prop_state, purchased_prop: monopyly.monopyly.PropertySet,
+                     prop_enemy_color: [monopyly.monopyly.PropertySet]):
+
+        if (action == 0 or prop_state == 0):
+
+            reward = cash * 200 - sum(self.avg_expected_value(player, game_state, property_set_colors=x) for x in
+                                      prop_enemy_color) - self.avg_expected_value(player, game_state,
+                                                                             property_set_colors=purchased_prop)
+
+        else:
+
+            reward = cash * 200 - (sum([x.price for x in purchased_prop.properties]) / len(
+                purchased_prop.properties)) + self.avg_expected_value(player, game_state,
+                                                                 property_set_colors=purchased_prop) - sum(
+                self.avg_expected_value(player, game_state, property_set_colors=x) for x in prop_enemy_color)
+
+        return reward
+
 
 """
 Reward function
@@ -245,18 +345,38 @@ else: reward is: cash - all expected values
 
 
 
-
-
-        self.c = ""
-
-        self.d = ""
-
-set = PropertySet("test")
 gameS = Game()
 testb = Board(gameS)
 testp = Player("Green Demon", 1, testb)
 
-test = Property("Go", set, 110)
+
+
+
 
 model = mdp(2,gameS.state)
 print(model.max_price(7))
+
+print(model.reward_list[1])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
