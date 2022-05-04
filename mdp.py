@@ -1,6 +1,7 @@
 from expected_value import expected_value
 import numpy as np
-
+import monopyly.monopyly
+from monopyly.monopyly import *
 #only works on 30 maximum turns
 
 
@@ -10,7 +11,7 @@ import numpy as np
 
 
 class mdp():
-    def __init__(self,n_states):
+    def __init__(self,n_states,game_state:monopyly.monopyly.game.GameState):
 
         n_states = n_states
         #have a list of observations that are equivalent to the states
@@ -47,7 +48,7 @@ class mdp():
 
 
 
-
+        self.game_state = game_state
 
 
         #  0,1,2  (ignoring houses)
@@ -146,7 +147,7 @@ class mdp():
                 for state in range(len(stateSpace)):
                     pos = stateSpace[state].index(2)
                     #we have to consider the cost to purchase the most expensive property from a set
-                    price=max_price(pos)
+                    price=self.max_price(pos)
 
                     #accessing the money state
                     if stateSpace[state][1]*200 > price:
@@ -155,10 +156,60 @@ class mdp():
                         stateSpace[state][pos] = 0
 
 
+    def max_price(self,pos):
 
+        #Browns, Darkblues
+        if pos == 2:
+            #brown
+            return max([x.price for x in self.game_state.board.get_property_set("Brown").properties])
 
+        elif pos == 3:
+            #dark blue
+            return max([x.price for x in self.game_state.board.get_property_set("Dark blue").properties])
+        #Light blue, purple, orange, red, yellow, green
 
+        elif pos == 4:
+            #lightblue
+            return max([x.price for x in self.game_state.board.get_property_set("Light blue").properties])
 
+        elif pos == 5:
+            #purple
+            return max([x.price for x in self.game_state.board.get_property_set("Purple").properties])
+
+        elif pos == 6:
+            #orange
+            return max([x.price for x in self.game_state.board.get_property_set("Orange").properties])
+        elif pos == 7:
+            #red
+            return max([x.price for x in self.game_state.board.get_property_set("Red").properties])
+        elif pos == 8:
+            #yellow
+            return max([x.price for x in self.game_state.board.get_property_set("Yellow").properties])
+        elif pos == 9:
+            #green
+            return max([x.price for x in self.game_state.board.get_property_set("Green").properties])
+        #Kings Cross, Marylebone, Fenohil..., Liverpool
+
+        elif pos == 10:
+            #kings cross
+            return max([x.price for x in self.game_state.board.get_property_set("Station").properties])
+        elif pos == 11:
+            #Marylebone
+            return max([x.price for x in self.game_state.board.get_property_set("Station").properties])
+        elif pos == 12:
+            #Fenohil
+            return max([x.price for x in self.game_state.board.get_property_set("Station").properties])
+        elif pos == 13:
+            #livepool
+            return max([x.price for x in self.game_state.board.get_property_set("Station").properties])
+        #Electric, Water
+
+        elif pos == 14:
+            #electric
+            return max([x.price for x in self.game_state.board.get_property_set("Utility").properties])
+        elif pos == 15:
+            #water
+            return max([x.price for x in self.game_state.board.get_property_set("Utility").properties])
 
 
         #print(self.b.shape)
@@ -169,4 +220,12 @@ class mdp():
 
         self.d = ""
 
-mdp(2)
+set = PropertySet("test")
+gameS = Game()
+testb = Board(gameS)
+testp = Player("Green Demon", 1, testb)
+
+test = Property("Go", set, 110)
+
+model = mdp(2,gameS.state)
+print(model.max_price(4))

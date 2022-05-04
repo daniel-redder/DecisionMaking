@@ -16,6 +16,6 @@ class Go(Square):
         '''
         When a player lands on Go they get £200.
         '''
-        Logger.log("{0} landed on Go and gets £200".format(player.name))
-        game.give_money_to_player(player, 200)
+        await Logger.log("{0} landed on Go and gets £200".format(player.name))
+        await game.give_money_to_player(player, 200)
 

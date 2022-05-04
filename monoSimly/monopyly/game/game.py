@@ -641,7 +641,7 @@ class Game(object):
         '''
         Returns True if the set has balanced housing, False if not.
         '''
-        houses_for_each_property = [p.number_of_houses for p in property_set.properties]
+        houses_for_each_property = [p.number_of_houses for p in await property_set.properties]
         if max(houses_for_each_property) - min(houses_for_each_property) <= 1:
             return True
         else:
