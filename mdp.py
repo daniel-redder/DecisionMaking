@@ -4,7 +4,7 @@ import monopyly.monopyly
 from monopyly.monopyly import *
 #only works on 30 maximum turns
 import copy
-
+import mdptoolbox
 
 
 
@@ -13,43 +13,87 @@ import copy
 class mdp():
     def __init__(self,n_states,game_state:monopyly.monopyly.game.GameState):
 
-        n_states = n_states
-        #have a list of observations that are equivalent to the states
-        n_observ = n_states
 
-        """
-        list of states:
-        players position, integer 0-39
-        
-        
-        turns_in_jail:
-            0-3  (on turn three pays $50)
-            
-        
-        
-        mdp 2
-        ---------------------------------------------------------------------------------------------
-        
-        28 properties
-        
-        players cash integer 0-5000 increments of 100 (if we have to decrease that number we will)
-        
-        (each property has a unique rent)
-        the price of the property (to purchase)
-        and the rent given (how many houses) (how many other properties in color set owned)
-        
-        the action is :buy, :not_buy
-        
-        state: property to be purchased
-        
-        
-        """
+        self.build_matrices(n_states,game_state)
+
+        #self.dont_buy_state
+
+        #number of states x number states
+        # 168 possible combinations
+        # 168 x 168
+        #2 x (168 x168) (168 x16)
 
 
+        #array1 = np.array(self.stateSpace).flatten()
+        #array2 = np.array(self.dont_buy_state).flatten()
+        #sel.buy_state
+        #self.transition = np.array((self.stateSpace,self.dont_buy_state)).reshape(1,4096,4096)
+
+
+
+        #print(array1.shape,array2.shape)
+
+
+        #self.transition = np.zeros((2,))
+
+        print(self.transition.shape)
+
+
+        print(len(self.stateSpace),"self statespace")
+
+        print(len(self.buy_state),len(self.stateSpace),len(self.dont_buy_state))
+        print("state_space")
+
+        testa = np.array(self.stateSpace)
+        testb = np.array(self.buy_state)
+        testc = np.array(self.dont_buy_state)
+        print(testa.shape,"  ",testb.shape,"  ",testc.shape)
+
+
+
+        #print(holder_arr.shape,"what")
+
+
+
+        #self.transition = self.transition.flatten()
+
+        print(self.transition.shape,"what2")
+
+
+        print(len(self.reward_list[0][1]))
+        print(len(self.reward_list[1][1]))
+
+
+        rewards = np.column_stack((self.reward_list[0][1],self.reward_list[1][1]))
+        self.reward = rewards
+
+        print(self.reward_list)
+
+        print(self.reward.shape,"reward")
+
+
+
+        self.mdp = mdptoolbox.mdp.PolicyIteration(
+            transitions=self.transition,
+            reward = self.reward,
+            discount = .9,
+        )
+
+        self.mdp.run()
+
+        print(self.mdp.policy)
+
+
+
+
+
+
+    def build_matrices(self,n_states,game_state):
 
 
         self.game_state = game_state
-
+        # have a list of observations that are equivalent to the states
+        n_observ = n_states
 
         #  0,1  (ignoring houses)
         #we are considering that all properties of the same color have the same rent
@@ -64,14 +108,14 @@ class mdp():
 
         #0,1
         utilities_length = 2
-        utilities_statespace = [utilities_length for x in range(2)]
-        station_statespace = [utilities_length for x in range(4)]
+        utilities_statespace = [utilities_length for x in range(1)]
+        station_statespace = [utilities_length for x in range(1)]
 
         #maximum addresable ammount 600 starting at 0 iter 200
         cash_statespace = 4
 
         #considers every beginning midpoint near end
-        turn_statespace = 3
+        turn_statespace = 4
 
         #buy or not buy
         action_dimensions = 2
@@ -94,29 +138,18 @@ class mdp():
 
         tot = 1
         for x in joint_statespace: tot = tot * x
-        print(tot)
-        print(joint_statespace)
-
-        self.a = np.zeros( (n_states, n_observ) )
-        np.fill_diagonal(self.a, 1.0)
-
-        self.b =  np.zeros( tuple(joint_statespace) )
-
-        #self.b.reshape((2,3,6,3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3))
-
-        #for action in range(self.b.shape[0]):
-            #every property given a action
-            #loop_action = self.b[action]
+        #print(tot)
+        #print(joint_statespace)
 
 
-            #action don't buy
-            #if action==0:
+
+        b =  np.zeros( tuple(joint_statespace) )
 
 
         stateSpace = []
 
-        for turn in range(self.b.shape[0]):
-            for cash in range(4):
+        for turn in range(b.shape[0]):
+            for cash in range(cash_statespace):
                 for a in range(2):
                     for b in range(2):
                         for c in range(2):
@@ -127,23 +160,25 @@ class mdp():
                                             for h in range(2):
                                                 for i in range(2):
                                                     for j in range(2):
-                                                        for k in range(2):
-                                                            for l in range(2):
-                                                                for m in range(2):
-                                                                    for n in range(2):
-
-                                                                        state = [turn,cash,a, b, c, d, e, f, g, h, i, j, k, l, m, n]
-                                                                        if state[2:].count(1) == 1:
-                                                                            #print(state)
-                                                                            stateSpace.append(state)
+                                                        state = [turn,cash,a, b, c, d, e, f, g, h, i, j]
+                                                        #if state[2:].count(1) == 1:
+                                                            #print(state)
+                                                        stateSpace.append(state)
 
 
         dont_buy_state = copy.deepcopy(stateSpace)
 
-
-
+        self.stateSpace = stateSpace
 
         buy_state = copy.deepcopy(stateSpace)
+
+        print(len(stateSpace)*len(stateSpace)*2)
+
+        self.transition = np.zeros((2,len(stateSpace),len(stateSpace)))
+        np.fill_diagonal(self.transition[0], 1.0)
+        np.fill_diagonal(self.transition[1], 1.0)
+        print(self.transition)
+
 
         self.reward_list = [[0,[]],[1,[]]]
 
@@ -159,56 +194,107 @@ class mdp():
                                     11:testb.get_property_set("Utility"),12:testb.get_property_set("Station"),13:testb.get_property_set("Station"),
                                     14:testb.get_property_set("Station"),15:testb.get_property_set("Station")}
 
-        print(action_dimensions)
+        #print(action_dimensions)
+
+
+        print(len(stateSpace), "what is going on")
 
         #0,1  buy don't buy
         for action in range(action_dimensions):
             if action == 0:
                 for state in range(len(stateSpace)):
-                    print(stateSpace[state],state)
-                    pos = stateSpace[state][2:].index(1)+2
-                    dont_buy_state[state][pos] = 0
+                            #print(stateSpace[state],state)
 
-                    if not pos == len(index_to_property_set) - 1:
-                        prop_enemy_color=[index_to_property_set[x] for x in range(2, pos)] + [index_to_property_set[x] for x in
-                            range(pos + 1, len(index_to_property_set) - 1)]
+                            try:
+                                pos = stateSpace[state][2:].index(1)+2
+                            except:
+                                pos = 3
 
-                    else:
-                        prop_enemy_color= [index_to_property_set[x] for x in range(2,pos)]
+                            dont_buy_state[state][pos] = 0
 
-                    self.reward_list[0][1].append(self.reward_value(player=testp, game_state=gameS.state, cash = stateSpace[state][1], action = action, prop_state = 0
-                                                          ,purchased_prop=index_to_property_set[pos], prop_enemy_color=prop_enemy_color))
+                            if not pos == len(index_to_property_set) - 1:
+                                prop_enemy_color=[index_to_property_set[x] for x in range(2, pos)] + [index_to_property_set[x] for x in
+                                    range(pos + 1, len(index_to_property_set) - 1)]
+
+                            else:
+                                prop_enemy_color= [index_to_property_set[x] for x in range(2,pos)]
+
+                            self.reward_list[0][1].append(self.reward_value(player=testp, game_state=gameS.state, cash = stateSpace[state][1], action = action, prop_state = 0
+                                                                  ,purchased_prop=index_to_property_set[pos], prop_enemy_color=prop_enemy_color))
 
 
 
-                    print(stateSpace[state])
+                    #print(stateSpace[state])
 
             elif action == 1:
                 for state in range(len(stateSpace)):
-                    print(stateSpace[state],"what")
-                    pos = stateSpace[state][2:].index(1)+2
-                    #we have to consider the cost to purchase the most expensive property from a set
-                    price=self.max_price(pos)
+                            #print(stateSpace[state],"what")
 
-                    if not pos == len(index_to_property_set) - 1:
-                        prop_enemy_color = [index_to_property_set[x] for x in range(2, pos)] + [index_to_property_set[x]
-                                                                                                for x in
-                                                                                                range(pos + 1, len(
-                                                                                                    index_to_property_set) - 1)]
-
-                    else:
-                        prop_enemy_color = [index_to_property_set[x] for x in range(2, pos)]
+                            try:
+                                pos = stateSpace[state][2:].index(1)+2
 
 
-                    #accessing the money state
-                    if stateSpace[state][1]*200 > price:
-                        self.reward_list[1][1].append(self.reward_value(player=testp, game_state=gameS.state, cash = stateSpace[state][1], action = action, prop_state = 1
-                                                          ,purchased_prop=index_to_property_set[pos], prop_enemy_color=prop_enemy_color))
-                        pass
-                    else:
-                        buy_state[state][pos] = 0
-                        self.reward_list[1][1].append(self.reward_value(player=testp, game_state=gameS.state, cash = stateSpace[state][1], action = action, prop_state = 0
-                                                          ,purchased_prop=index_to_property_set[pos], prop_enemy_color=prop_enemy_color))
+
+
+                                #we have to consider the cost to purchase the most expensive property from a set
+                                price=self.max_price(pos)
+
+                                if not pos == len(index_to_property_set) - 1:
+                                    prop_enemy_color = [index_to_property_set[x] for x in range(2, pos)] + [index_to_property_set[x]
+                                                                                                            for x in
+                                                                                                            range(pos + 1, len(
+                                                                                                                index_to_property_set) - 1)]
+
+                                else:
+                                    prop_enemy_color = [index_to_property_set[x] for x in range(2, pos)]
+
+
+                                #accessing the money state
+                                if stateSpace[state][1]*200 > price:
+                                    self.reward_list[1][1].append(self.reward_value(player=testp, game_state=gameS.state, cash = stateSpace[state][1], action = action, prop_state = 1
+                                                                      ,purchased_prop=index_to_property_set[pos], prop_enemy_color=prop_enemy_color))
+
+
+
+
+
+                                else:
+                                    buy_state[state][pos] = 0
+                                    self.reward_list[1][1].append(self.reward_value(player=testp, game_state=gameS.state, cash = stateSpace[state][1], action = action, prop_state = 0
+                                                                      ,purchased_prop=index_to_property_set[pos], prop_enemy_color=prop_enemy_color))
+
+                                    temporary_state = stateSpace[state].copy()
+                                    temporary_state[pos] = 0
+
+                                    change_pos = stateSpace.index(temporary_state)
+                                    print(change_pos)
+                                    print(temporary_state, stateSpace[state])
+
+                                    self.transition[1, state, change_pos] = 1
+                                    self.transition[1, state, state] = 0
+
+                            except:
+                                pos = 3
+
+                                if not pos == len(index_to_property_set) - 1:
+                                    prop_enemy_color = [index_to_property_set[x] for x in range(2, pos)] + [
+                                        index_to_property_set[x]
+                                        for x in
+                                        range(pos + 1, len(
+                                            index_to_property_set) - 1)]
+
+                                else:
+                                    prop_enemy_color = [index_to_property_set[x] for x in range(2, pos)]
+
+                                self.reward_list[1][1].append(
+                                    self.reward_value(player=testp, game_state=gameS.state, cash=stateSpace[state][1],
+                                                      action=action, prop_state=0
+                                                      , purchased_prop=index_to_property_set[pos],
+                                                      prop_enemy_color=prop_enemy_color))
+
+
+        self.dont_buy_state = dont_buy_state
+        self.buy_state = buy_state
 
 
     def max_price(self,pos):
@@ -356,7 +442,7 @@ testp = Player("Green Demon", 1, testb)
 model = mdp(2,gameS.state)
 print(model.max_price(7))
 
-print(model.reward_list[1])
+#print(model.reward_list[1])
 
 
 
