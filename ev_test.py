@@ -115,7 +115,7 @@ def cptValue(player, game_state, check_property: []):
     maximum_turns = 30
     discount_factor = .9
 
-    color_set_list = [x.property_set for x in check_property]
+    color_set_list = check_property
 
     # for each unique color set in check_property
     for color in color_set_list:

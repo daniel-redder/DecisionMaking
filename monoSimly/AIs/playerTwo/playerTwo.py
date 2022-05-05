@@ -142,7 +142,7 @@ class playerTwo(PlayerAIBase):
         out_string= out_string+"\n \n You will be given 3 chances to propose a trade with the opponent."
 
         print(out_string)
-        await self.messager("what the fuck")
+        #await self.messager("what the fuck")
         await self.messager(out_string)
 
 

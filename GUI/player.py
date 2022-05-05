@@ -3,7 +3,7 @@ import json
 
 
 
-class player:
+class Modeledplayer:
 
     """
     color the pygame color to display the token
@@ -41,7 +41,7 @@ class player:
         self.x, self.y = self.teleport(0)
 
         #time.sleep(100)
-        self.walk(39)
+        #self.walk(39)
 
 
 
