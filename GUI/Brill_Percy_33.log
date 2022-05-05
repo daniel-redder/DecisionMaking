@@ -1,0 +1,683 @@
+Start of game. Players:
+- Brill
+- Percy
+
+Start of turn for Brill
+- Cash=£1500, Net Worth=£1500
+- Rolled (3, 2)
+- Moved to Kings Cross Station
+- Brill pays £200
+- Brill gets Kings Cross Station
+- Processing time remaining=19.999901600000157sec
+
+Start of turn for Percy
+- Cash=£1500, Net Worth=£1500
+- Rolled (3, 3)
+- Moved to The Angel Islington
+- Percy pays £100
+- Percy gets The Angel Islington
+- Rolled (5, 6)
+- Moved to Community Chest
+- Percy pays £100
+- Processing time remaining=19.99984630000108sec
+
+Start of turn for Brill
+- Cash=£1300, Net Worth=£1400
+- Rolled (1, 2)
+- Moved to Euston Road
+- Brill pays £100
+- Brill gets Euston Road
+- Processing time remaining=19.999807800000326sec
+
+Start of turn for Percy
+- Cash=£1300, Net Worth=£1350
+- Rolled (1, 2)
+- Moved to Free Parking
+- Processing time remaining=19.99979630000189sec
+
+Start of turn for Brill
+- Cash=£1200, Net Worth=£1350
+- Rolled (1, 5)
+- Moved to Northumberland Avenue
+- Brill pays £160
+- Brill gets Northumberland Avenue
+- Processing time remaining=19.999711500001013sec
+
+Start of turn for Percy
+- Cash=£1300, Net Worth=£1350
+- Rolled (4, 6)
+- Moved to Go To Jail
+- Moved to Jail
+- Processing time remaining=19.999750100001165sec
+
+Start of turn for Brill
+- Cash=£1040, Net Worth=£1270
+- Rolled (4, 2)
+- Moved to Free Parking
+- Processing time remaining=19.999665200000436sec
+
+Start of turn for Percy
+- Cash=£1300, Net Worth=£1350
+- Percy pays £50
+- Rolled (5, 3)
+- Moved to Marlborough Street
+- Percy pays £180
+- Percy gets Marlborough Street
+- Processing time remaining=19.999664800002392sec
+
+Start of turn for Brill
+- Cash=£1040, Net Worth=£1270
+- Rolled (4, 2)
+- Moved to Leicester Square
+- Brill pays £260
+- Brill gets Leicester Square
+- Processing time remaining=19.99957310000036sec
+
+Start of turn for Percy
+- Cash=£1070, Net Worth=£1210
+- Rolled (6, 2)
+- Moved to Leicester Square
+- Percy must pay rent of £22 to Brill
+- Percy pays £22
+- Brill gets £22
+- Processing time remaining=19.99958940000306sec
+
+Start of turn for Brill
+- Cash=£802, Net Worth=£1162
+- Rolled (1, 3)
+- Moved to Go To Jail
+- Moved to Jail
+- Processing time remaining=19.999528200000896sec
+
+Start of turn for Percy
+- Cash=£1048, Net Worth=£1188
+- Rolled (4, 5)
+- Moved to Liverpool Street Station
+- Percy pays £200
+- Percy gets Liverpool Street Station
+- Processing time remaining=19.999482700002773sec
+
+Start of turn for Brill
+- Cash=£802, Net Worth=£1162
+- Brill proposed deal to Percy: Offered: []. Wanted: [Liverpool Street Station]
+  - Percy rejected the deal
+- Brill pays £50
+- Rolled (1, 6)
+- Moved to Community Chest
+- Brill gets £200
+- Processing time remaining=19.999396300001536sec
+
+Start of turn for Percy
+- Cash=£848, Net Worth=£1088
+- Rolled (5, 1)
+- Percy gets £200 for passing Go
+- Moved to Old Kent Road
+- Percy pays £60
+- Percy gets Old Kent Road
+- Processing time remaining=19.999404200003482sec
+
+Start of turn for Brill
+- Cash=£952, Net Worth=£1312
+- Rolled (5, 1)
+- Moved to Fleet Street
+- Brill pays £220
+- Brill gets Fleet Street
+- Processing time remaining=19.99928470000168sec
+
+Start of turn for Percy
+- Cash=£988, Net Worth=£1258
+- Rolled (5, 6)
+- Moved to Electric Company
+- Electric Company offered for auction
+  - Bids: [('Brill', 290), ('Percy', 135)]
+  - Brill pays £136
+  - Brill gets Electric Company
+- Processing time remaining=19.99932290000379sec
+
+Start of turn for Brill
+- Cash=£596, Net Worth=£1141
+- Rolled (3, 3)
+- Moved to Piccadilly
+- Brill pays £280
+- Brill gets Piccadilly
+- Rolled (4, 3)
+- Moved to Chance
+- Brill gets £100
+- Processing time remaining=19.99909730000263sec
+
+Start of turn for Percy
+- Cash=£988, Net Worth=£1258
+- Rolled (2, 1)
+- Moved to Marylebone Station
+- Marylebone Station offered for auction
+  - Bids: [('Brill', 344), ('Percy', 200)]
+  - Brill pays £201
+  - Brill gets Marylebone Station
+- Processing time remaining=19.999245100003463sec
+
+Start of turn for Brill
+- Cash=£215, Net Worth=£1000
+- Rolled (3, 1)
+- Moved to Go
+- Brill landed on Go and gets £200
+- Brill gets £200
+- Processing time remaining=19.99897420000343sec
+
+Start of turn for Percy
+- Cash=£988, Net Worth=£1258
+- Rolled (2, 1)
+- Moved to Marlborough Street
+- Percy already owns this property
+- Processing time remaining=19.999183700004323sec
+
+Start of turn for Brill
+- Cash=£415, Net Worth=£1200
+- Rolled (5, 4)
+- Moved to Pentonville Road
+- Brill pays £120
+- Brill gets Pentonville Road
+- Processing time remaining=19.99889540000413sec
+
+Start of turn for Percy
+- Cash=£988, Net Worth=£1258
+- Rolled (5, 4)
+- Moved to Coventry Street
+- Percy pays £260
+- Percy gets Coventry Street
+- Processing time remaining=19.999109700004283sec
+
+Start of turn for Brill
+- Cash=£295, Net Worth=£1140
+- Rolled (1, 6)
+- Moved to Bow Street
+- Brill pays £180
+- Brill gets Bow Street
+- Processing time remaining=19.998818200002916sec
+
+Start of turn for Percy
+- Cash=£728, Net Worth=£1128
+- Rolled (3, 5)
+- Moved to Liverpool Street Station
+- Percy already owns this property
+- Processing time remaining=19.999057900004118sec
+
+Start of turn for Brill
+- Cash=£115, Net Worth=£1050
+- Rolled (2, 1)
+- Moved to Vine Street
+- Brill gets £150
+- Brill pays £200
+- Brill gets Vine Street
+- Processing time remaining=19.998719500003972sec
+
+Start of turn for Percy
+- Cash=£728, Net Worth=£1128
+- Rolled (3, 3)
+- Percy gets £200 for passing Go
+- Moved to Old Kent Road
+- Percy already owns this property
+- Rolled (5, 3)
+- Moved to Pentonville Road
+- Property is mortgaged
+- Processing time remaining=19.99900240000352sec
+
+Start of turn for Brill
+- Cash=£65, Net Worth=£950
+- Rolled (5, 3)
+- Moved to Coventry Street
+- Brill must pay rent of £22 to Percy
+- Brill pays £22
+- Percy gets £22
+- Processing time remaining=19.998649700002716sec
+
+Start of turn for Percy
+- Cash=£950, Net Worth=£1350
+- Rolled (2, 3)
+- Moved to Northumberland Avenue
+- Percy must pay rent of £12 to Brill
+- Percy pays £12
+- Brill gets £12
+- Processing time remaining=19.998923500002547sec
+
+Start of turn for Brill
+- Cash=£55, Net Worth=£940
+- Rolled (4, 4)
+- Moved to Liverpool Street Station
+- Brill must pay rent of £25 to Percy
+- Brill pays £25
+- Percy gets £25
+- Rolled (4, 3)
+- Brill gets £200 for passing Go
+- Moved to Community Chest
+- Brill pays £100
+- Processing time remaining=19.998529100001633sec
+
+Start of turn for Percy
+- Cash=£963, Net Worth=£1363
+- Rolled (6, 5)
+- Moved to Fenchurch Street Station
+- Fenchurch Street Station offered for auction
+  - Bids: [('Brill', 522), ('Percy', 200)]
+  - Brill pays £201
+  - Brill gets £201
+  - Percy pays £1
+  - Percy gets Fenchurch Street Station
+- Processing time remaining=19.998803900004077sec
+
+Start of turn for Brill
+- Cash=£130, Net Worth=£1015
+- Brill proposed deal to Percy: Offered: []. Wanted: [Fenchurch Street Station]
+  - Percy rejected the deal
+- Rolled (3, 1)
+- Moved to The Angel Islington
+- Brill must pay rent of £6 to Percy
+- Brill pays £6
+- Percy gets £6
+- Processing time remaining=19.998352299999624sec
+
+Start of turn for Percy
+- Cash=£968, Net Worth=£1468
+- Rolled (6, 3)
+- Moved to Bond Street
+- Percy pays £320
+- Percy gets Bond Street
+- Processing time remaining=19.998720900002354sec
+
+Start of turn for Brill
+- Cash=£124, Net Worth=£1009
+- Rolled (6, 3)
+- Moved to Marylebone Station
+- Brill already owns this property
+- Processing time remaining=19.998314200000095sec
+
+Start of turn for Percy
+- Cash=£648, Net Worth=£1308
+- Rolled (3, 5)
+- Percy gets £200 for passing Go
+- Moved to Community Chest
+- Percy gets £25
+- Processing time remaining=19.998665400002665sec
+
+Start of turn for Brill
+- Cash=£124, Net Worth=£1009
+- Rolled (6, 2)
+- Moved to Fleet Street
+- Brill already owns this property
+- Processing time remaining=19.9982815999997sec
+
+Start of turn for Percy
+- Cash=£873, Net Worth=£1533
+- Rolled (3, 6)
+- Moved to Pall Mall
+- Percy pays £140
+- Percy gets Pall Mall
+- Processing time remaining=19.9985949000029sec
+
+Start of turn for Brill
+- Cash=£124, Net Worth=£1009
+- Rolled (3, 3)
+- Moved to Piccadilly
+- Brill already owns this property
+- Rolled (2, 2)
+- Moved to Community Chest
+- Brill gets £20
+- Rolled (6, 6)
+- Moved to Jail
+- Processing time remaining=19.998240099999748sec
+
+Start of turn for Percy
+- Cash=£733, Net Worth=£1463
+- Rolled (5, 3)
+- Moved to Vine Street
+- Percy must pay rent of £16 to Brill
+- Percy pays £16
+- Brill gets £16
+- Processing time remaining=19.9985077000033sec
+
+Start of turn for Brill
+- Cash=£160, Net Worth=£1045
+- Brill pays £50
+- Rolled (5, 2)
+- Moved to Community Chest
+- Brill gets £100
+- Processing time remaining=19.998133499999312sec
+
+Start of turn for Percy
+- Cash=£717, Net Worth=£1447
+- Rolled (3, 4)
+- Moved to Leicester Square
+- Percy must pay rent of £22 to Brill
+- Percy pays £22
+- Brill gets £22
+- Processing time remaining=19.998423000004095sec
+
+Start of turn for Brill
+- Cash=£232, Net Worth=£1117
+- Rolled (5, 6)
+- Moved to Water Works
+- Brill pays £150
+- Brill gets Water Works
+- Processing time remaining=19.998014399999192sec
+
+Start of turn for Percy
+- Cash=£695, Net Worth=£1425
+- Rolled (3, 4)
+- Moved to Community Chest
+- Percy gets £100
+- Processing time remaining=19.998354200004087sec
+
+Start of turn for Brill
+- Cash=£82, Net Worth=£1042
+- Rolled (5, 6)
+- Moved to Mayfair
+- Brill gets £350
+- Brill pays £400
+- Brill gets Mayfair
+- Processing time remaining=19.997919299999467sec
+
+Start of turn for Percy
+- Cash=£795, Net Worth=£1525
+- Rolled (3, 6)
+- Percy gets £200 for passing Go
+- Moved to Community Chest
+- Percy pays £50
+- Processing time remaining=19.99823440000273sec
+
+Start of turn for Brill
+- Cash=£32, Net Worth=£842
+- Rolled (2, 2)
+- Brill gets £200 for passing Go
+- Moved to Whitechapel Road
+- Brill pays £60
+- Brill gets Whitechapel Road
+- Rolled (3, 4)
+- Moved to Jail
+- Processing time remaining=19.997835199998917sec
+
+Start of turn for Percy
+- Cash=£945, Net Worth=£1675
+- Rolled (4, 5)
+- Moved to Pall Mall
+- Percy already owns this property
+- Processing time remaining=19.998168600002373sec
+
+Start of turn for Brill
+- Cash=£172, Net Worth=£1012
+- Rolled (1, 4)
+- Moved to Marylebone Station
+- Brill already owns this property
+- Processing time remaining=19.99780059999921sec
+
+Start of turn for Percy
+- Cash=£945, Net Worth=£1675
+- Rolled (2, 6)
+- Moved to Vine Street
+- Percy must pay rent of £16 to Brill
+- Percy pays £16
+- Brill gets £16
+- Processing time remaining=19.998095400000693sec
+
+Start of turn for Brill
+- Cash=£188, Net Worth=£1028
+- Rolled (5, 4)
+- Moved to Trafalgar Square
+- Brill gets £200
+- Brill pays £240
+- Brill gets Trafalgar Square
+- Processing time remaining=19.997674599999755sec
+
+Start of turn for Percy
+- Cash=£929, Net Worth=£1659
+- Rolled (2, 4)
+- Moved to Fenchurch Street Station
+- Percy already owns this property
+- Processing time remaining=19.99801710000156sec
+
+Start of turn for Brill
+- Cash=£148, Net Worth=£908
+- Rolled (1, 3)
+- Moved to Water Works
+- Brill already owns this property
+- Processing time remaining=19.997639799999888sec
+
+Start of turn for Percy
+- Cash=£929, Net Worth=£1659
+- Rolled (2, 4)
+- Moved to Regent Street
+- Percy pays £300
+- Percy gets Regent Street
+- Processing time remaining=19.997930000001816sec
+
+Start of turn for Brill
+- Cash=£148, Net Worth=£908
+- Rolled (3, 6)
+- Moved to Park Lane
+- Brill gets £230
+- Brill pays £350
+- Brill gets Park Lane
+- Processing time remaining=19.99754750000102sec
+
+Start of turn for Percy
+- Cash=£629, Net Worth=£1509
+- Rolled (6, 2)
+- Moved to Mayfair
+- Property is mortgaged
+- Processing time remaining=19.997864400002072sec
+
+Start of turn for Brill
+- Cash=£28, Net Worth=£733
+- Rolled (5, 2)
+- Brill gets £200 for passing Go
+- Moved to Income Tax
+- Brill pays £200
+- Processing time remaining=19.99747600000137sec
+
+Start of turn for Percy
+- Cash=£629, Net Worth=£1509
+- Rolled (3, 3)
+- Percy gets £200 for passing Go
+- Moved to Kings Cross Station
+- Property is mortgaged
+- Rolled (3, 1)
+- Moved to Pentonville Road
+- Property is mortgaged
+- Processing time remaining=19.997788800001672sec
+
+Start of turn for Brill
+- Cash=£28, Net Worth=£733
+- Rolled (2, 5)
+- Moved to Pall Mall
+- Brill must pay rent of £10 to Percy
+- Brill pays £10
+- Percy gets £10
+- Processing time remaining=19.997397400002228sec
+
+Start of turn for Percy
+- Cash=£839, Net Worth=£1719
+- Rolled (6, 6)
+- Moved to Strand
+- Percy pays £220
+- Percy gets Strand
+- Rolled (1, 6)
+- Moved to Water Works
+- Percy must pay rent of £70 to Brill
+- Percy pays £70
+- Brill gets £70
+- Processing time remaining=19.99767410000095sec
+
+Start of turn for Brill
+- Cash=£88, Net Worth=£793
+- Rolled (4, 1)
+- Moved to Bow Street
+- Brill already owns this property
+- Processing time remaining=19.99736040000198sec
+
+Start of turn for Percy
+- Cash=£549, Net Worth=£1539
+- Rolled (5, 6)
+- Moved to Mayfair
+- Property is mortgaged
+- Processing time remaining=19.997602700001153sec
+
+Start of turn for Brill
+- Cash=£88, Net Worth=£793
+- Rolled (4, 5)
+- Moved to Fenchurch Street Station
+- Brill must pay rent of £50 to Percy
+- Brill pays £50
+- Percy gets £50
+- Processing time remaining=19.997293300001274sec
+
+Start of turn for Percy
+- Cash=£599, Net Worth=£1589
+- Rolled (4, 1)
+- Percy gets £200 for passing Go
+- Moved to Income Tax
+- Percy pays £200
+- Processing time remaining=19.997520100000656sec
+
+Start of turn for Brill
+- Cash=£38, Net Worth=£743
+- Rolled (2, 2)
+- Moved to Piccadilly
+- Brill already owns this property
+- Rolled (5, 4)
+- Moved to Super Tax
+- Brill gets £100
+- Brill pays £100
+- Processing time remaining=19.997203300002184sec
+
+Start of turn for Percy
+- Cash=£599, Net Worth=£1589
+- Rolled (2, 1)
+- Moved to Chance
+- Percy has been assessed for street repairs
+  - Percy pays £0
+- Processing time remaining=19.997345000000223sec
+
+Start of turn for Brill
+- Cash=£38, Net Worth=£643
+- Rolled (3, 4)
+- Brill gets £200 for passing Go
+- Moved to Kings Cross Station
+- Brill already owns this property
+- Processing time remaining=19.997136900002715sec
+
+Start of turn for Percy
+- Cash=£599, Net Worth=£1589
+- Rolled (1, 2)
+- Moved to Jail
+- Processing time remaining=19.997273100000257sec
+
+Start of turn for Brill
+- Cash=£238, Net Worth=£843
+- Rolled (4, 5)
+- Moved to Northumberland Avenue
+- Brill already owns this property
+- Processing time remaining=19.99710190000269sec
+
+Start of turn for Percy
+- Cash=£599, Net Worth=£1589
+- Rolled (1, 1)
+- Moved to Electric Company
+- Percy must pay rent of £20 to Brill
+- Percy pays £20
+- Brill gets £20
+- Rolled (4, 3)
+- Moved to Vine Street
+- Percy must pay rent of £16 to Brill
+- Percy pays £16
+- Brill gets £16
+- Processing time remaining=19.9971727000011sec
+
+Start of turn for Brill
+- Cash=£274, Net Worth=£879
+- Rolled (4, 1)
+- Moved to Vine Street
+- Brill already owns this property
+- Processing time remaining=19.997062500002357sec
+
+Start of turn for Percy
+- Cash=£563, Net Worth=£1553
+- Rolled (3, 6)
+- Moved to Water Works
+- Percy must pay rent of £90 to Brill
+- Percy pays £90
+- Brill gets £90
+- Processing time remaining=19.997092900001917sec
+
+Start of turn for Brill
+- Cash=£364, Net Worth=£969
+- Rolled (5, 1)
+- Moved to Fenchurch Street Station
+- Brill must pay rent of £50 to Percy
+- Brill pays £50
+- Percy gets £50
+- Processing time remaining=19.99699130000272sec
+
+Start of turn for Percy
+- Cash=£523, Net Worth=£1513
+- Rolled (6, 1)
+- Moved to Liverpool Street Station
+- Percy already owns this property
+- Processing time remaining=19.99700960000291sec
+
+Start of turn for Brill
+- Cash=£314, Net Worth=£919
+- Rolled (5, 5)
+- Moved to Liverpool Street Station
+- Brill must pay rent of £50 to Percy
+- Brill pays £50
+- Percy gets £50
+- Rolled (6, 2)
+- Brill gets £200 for passing Go
+- Moved to Whitechapel Road
+- Brill already owns this property
+- Processing time remaining=19.996917500001928sec
+
+Start of turn for Percy
+- Cash=£573, Net Worth=£1563
+- Rolled (5, 1)
+- Percy gets £200 for passing Go
+- Moved to Old Kent Road
+- Percy already owns this property
+- Processing time remaining=19.996936500002448sec
+
+Start of turn for Brill
+- Cash=£464, Net Worth=£1069
+- Rolled (4, 3)
+- Moved to Jail
+- Processing time remaining=19.996881500002473sec
+
+Start of turn for Percy
+- Cash=£773, Net Worth=£1763
+- Rolled (6, 1)
+- Moved to Euston Road
+- Percy must pay rent of £6 to Brill
+- Percy pays £6
+- Brill gets £6
+- Processing time remaining=19.99684870000192sec
+
+Start of turn for Brill
+- Cash=£470, Net Worth=£1075
+- Rolled (1, 3)
+- Moved to Northumberland Avenue
+- Brill already owns this property
+- Processing time remaining=19.99684420000267sec
+
+Start of turn for Percy
+- Cash=£767, Net Worth=£1757
+- Rolled (6, 6)
+- Moved to Free Parking
+- Rolled (4, 6)
+- Moved to Go To Jail
+- Moved to Jail
+- Processing time remaining=19.99677030000157sec
+
+Start of turn for Brill
+- Cash=£470, Net Worth=£1075
+- Rolled (1, 1)
+- Moved to Bow Street
+- Brill already owns this property
+- Rolled (3, 6)
+- Moved to Fenchurch Street Station
